@@ -1,0 +1,120 @@
+{
+    "pizzas":[
+        {
+            "id": 1,
+            "name": "Capricciosa",
+            "ingredients": [ "Tomato Sauce", "Mozzarella", "Ham", "Fresh Tomato", "Mushrooms"],
+            "img": "",
+            "quantity": 703,
+            "price": 40,
+            "allergens": [1,3]
+        },
+        {
+            "id": 2,
+            "name": "Quattro Stagioni",
+            "ingredients": [ "Tomato Sauce", "Mozzarella", "Ham", "Chorizo", "Green Peppers", "Mushrooms"],
+            "img": "",
+            "quantity": 713,
+            "price": 44,
+            "allergens": [1,3,4]
+        },
+        {
+            "id": 3,
+            "name": "Margherita",
+            "ingredients": [ "Tomato Sauce", "Mozzarella"],
+            "img": "",
+            "quantity": 555,
+            "price": 29,
+            "allergens": [1,3]
+        },
+        {
+            "id": 4,
+            "name": "Carnivora",
+            "ingredients": [ "Tomato Sauce", "Mozzarella", "Sausage", "Spicy Beef", "Pepperoni", "Ham"],
+            "img": "",
+            "quantity": 715,
+            "price": 47,
+            "allergens": [1,2,6,4,3]
+        },
+        {
+            "id": 5,
+            "name": "Vegetarian",
+            "ingredients": [ "Tomato Sauce", "Mozzarella", "Onions", "Mushrooms", "Sweet  Corn", "Fresh Tomato", "Green Peppers", "Black Olives"],
+            "img": "",
+            "quantity": 775,
+            "price": 38,
+            "allergens": [1,3]
+        },
+        {
+            "id": 6,
+            "name": "Quattro Formaggi",
+            "ingredients": [ "Cream Sauce", "Mozzarella", "Telemea Cheese", "Cheddar", "Parmezan"],
+            "img": "",
+            "quantity": 670,
+            "price": 44,
+            "allergens": [1,3]
+        },
+        {
+            "id": 7,
+            "name": "Mexicana",
+            "ingredients": [ "Tomato Sauce", "Mozzarella", "Bacon", "Chorizo", "Ham", "Jalapeno Peppers"],
+            "img": "",
+            "quantity": 713,
+            "price": 44,
+            "allergens": [1,3,4]
+        },
+        {
+            "id": 8,
+            "name": "Carbonara",
+            "ingredients": [ "Cream Sauce", "Mozzarella", "Blue Cheese", "Parmezan", "Bacon"],
+            "img": "",
+            "quantity": 690,
+            "price": 47,
+            "allergens": [1,3,4]
+        },
+        {
+            "id": 9,
+            "name": "Pepperoni",
+            "ingredients": [ "Tomato Sauce", "Extra Mozzarella", "Extra Pepperoni"],
+            "img": "",
+            "quantity": 660,
+            "price": 44,
+            "allergens": [1,2,6,4,3]
+        },
+        {
+            "id": 10,
+            "name": "Pollo",
+            "ingredients": [ "Cream Sauce", "Mozzarella", "Blue Cheese", "Fresh Tomato", "Chicken", "Mushrooms"],
+            "img": "",
+            "quantity": 750,
+            "price": 47,
+            "allergens": [1,3,4]
+        }
+    ],
+    "allergens":[
+        {
+            "id": 1,
+            "name": "gluten"
+        },
+        {
+            "id": 2,
+            "name": "eggs"
+        },
+        {
+            "id": 3,
+            "name": "lactose"
+        },
+        {
+            "id": 4,
+            "name": "soy"
+        },
+        {
+            "id": 5,
+            "name": "crustaceans"
+        },
+        {
+            "id": 6,
+            "name": "peanuts"
+        }
+    ]
+}
