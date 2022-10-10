@@ -1,0 +1,101 @@
+/* MY COLORS: GREEN : #1ca57d, WHITE: #ebeeec, RED :#b5393d, BLACK: #212127 */
+
+*{
+    font-family: Verdana, sans-serif;
+    padding: 12px ;
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+}
+/* MY CART */
+
+.basket-container {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
+
+.basket-content-container {
+    display: flex;
+    flex-direction: column;
+    width: auto;
+}
+.basket-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+    height: 50px;
+    font-size:24px;
+    background-color: #b5393d;
+}
+
+.basket-header > p {
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: 4px;
+} 
+
+.item, #total {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.item {
+    letter-spacing: 2px;
+    font-weight: 600;
+    align-items: center ;
+}
+
+#total {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.qty-container {
+    display: inline-flex;
+}
+#total {
+    display:flex;
+}
+
+/* FORM */
+#form {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #1d2336;
+    color:#ebeeec;
+    width: 600px;
+    border-radius: 10px;
+    box-shadow: 10px -2px 20px 2px rgba(255, 255, 255, 0.3);
+}
+
+input, textarea {
+    border-radius: 18px;
+}
+
+#input-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+
+#btn {
+    background-color: #1ca57d;
+    color: #ebeeec;
+    align-items: center;
+    border: 0;
+    letter-spacing: 1px;
+}
+
+p {
+    width: 100%;
+}
+
