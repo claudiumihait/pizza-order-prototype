@@ -6,12 +6,19 @@ const tools = require ('../public/javascripts/tools')
 
 /* GET home page. */
 router
-  .get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-})
+  .get("/", async (req,res) => {
+    res.redirect("/pizzas/list")
+  }) 
   .get('/api/pizzas', async (req, res) => {
     const pizzas = await tools.getData(jsonPath)
-    console.log(pizzas)
+    res.send(pizzas.pizzas)
+  })
+  .get('/api/allergens', async (req, res) => {
+    const pizzas = await tools.getData(jsonPath)
+    res.send(pizzas.allergens)
+  })
+  .get('/pizzas/list', (req, res)=>{
+    res.send("HELLO")
   })
 
 module.exports = router;
