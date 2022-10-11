@@ -1,13 +1,13 @@
-const pizzaComponent = (name, amount, price) => `
+const pizzaComponent = (name, amount, price,i) => `
 <div class="item">
 <div class="item-name">
 ${name.toUpperCase()}
 <div class="qty-container">                            
-<i id="remove" class="bi bi-patch-minus"></i>
+<i id="remove-${i}" class="bi bi-patch-minus"></i>
 <div class = "qty">
 ${amount}
 </div>
-<i id="add" class="bi bi-patch-plus"></i>
+<i id="add-${i}" class="bi bi-patch-plus"></i>
 </div>
 </div>
 <div class="item-value">
@@ -78,11 +78,14 @@ const loadEvent = (_) => {
   rootElement.insertAdjacentHTML("afterbegin", basketCardComponent);
 
   const contentElement = document.querySelector(".basket-content-container");
-  Object.values(sentBasket).forEach((pizza) =>
-    contentElement.insertAdjacentHTML("afterbegin", pizzaComponent(...pizza))
+  Object.values(sentBasket).forEach((pizza,i) =>
+    contentElement.insertAdjacentHTML("afterbegin", pizzaComponent(...pizza,i+1))
   );
 
-  contentElement.insertAdjacentHTML("beforeend", totalComponent(getTotalPrice()));
+  contentElement.insertAdjacentHTML(
+    "beforeend",
+    totalComponent(getTotalPrice())
+  );
 
   rootElement.insertAdjacentHTML("beforeend", formComponent);
 
@@ -90,9 +93,30 @@ const loadEvent = (_) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
     const next = event.target.nextSibling.nextSibling;
-    if (event.target.id === "add") {
+
+    if (event.target.id.includes("add")) {
+      //increase price
+      debugger;
+      const priceElt =
+        prev.parentElement.parentElement.parentElement.children[1];
+      let price = parseInt(priceElt.innerText.split(" ")[0]);
+      const initialQty = parseInt(prev.innerText);
+      let itemPrice = price / initialQty;
+      const newPrice = price + itemPrice;
+      priceElt.innerHTML = newPrice.toString() + " Ron";
+      //increase count
       prev.innerText = parseInt(prev.innerText) + 1;
-    } else if (event.target.id === "remove") {
+    } else if (event.target.id.includes("remove")) {
+      //decrease price
+      debugger;
+      const priceElt =
+        next.parentElement.parentElement.parentElement.children[1];
+      let price = parseInt(priceElt.innerText.split(" ")[0]);
+      const initialQty = parseInt(next.innerText);
+      let itemPrice = price / initialQty;
+      const newPrice = price - itemPrice;
+      priceElt.innerHTML = newPrice.toString() + " Ron";
+      //decrease count
       next.innerText -= 1;
       //remove listed item if count at 0
       next.innerText < 1

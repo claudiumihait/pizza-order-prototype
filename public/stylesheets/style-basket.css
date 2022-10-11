@@ -63,7 +63,7 @@
 
 /* ICONS AND BTNS */
 
-#add, #remove, #btn{
+i, #btn{
     cursor: pointer;
 }
 
