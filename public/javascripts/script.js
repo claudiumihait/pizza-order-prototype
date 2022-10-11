@@ -8,7 +8,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
   var allAllergensList = data.allergens;
 
   //function to add pizzas to order
-  async function addToBasket(pizzaId,amount){
+  async function addToBasket(pizzaId,amount,price){
     fetch(`http://127.0.0.1:3000/basket`,{
         method: 'POST',
         headers: {
@@ -16,7 +16,8 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
         },
         body: JSON.stringify({
           id:pizzaId,
-          amount:amount
+          amount:amount,
+          price:price
         })
     })
   }
@@ -91,7 +92,8 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
         let pizzaName = document.querySelectorAll(".pizzaName")[index].textContent;
         let pizzaId = allPizzasList.filter(elem => elem.name === pizzaName)[0].id;
         let amount = numberNode.textContent;
-        addToBasket(pizzaId,amount);
+        let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
+        addToBasket(pizzaId,amount,price);
         numberNode.textContent = 0;
       });
     });
@@ -148,7 +150,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
      
   }
 
-  window.addEventListener("load", loadEvent);
+  loadEvent();
 });
 
 
