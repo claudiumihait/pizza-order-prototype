@@ -42,6 +42,9 @@ let orderSchema = {
 const loadEvent = (_) => {
   const rootElement = document.getElementById("root");
 
+  console.log("loaded basket: ")
+  console.log(sentBasket)
+
   const clickEvent = (event) => {
     //handle add and remove on click
     if (event.target.id === "add") {
