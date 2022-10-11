@@ -150,7 +150,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
      
   }
 
-  window.addEventListener("load", loadEvent);
+  loadEvent();
 });
 
 
