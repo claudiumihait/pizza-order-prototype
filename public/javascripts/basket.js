@@ -1,4 +1,4 @@
-const pizzaComponent = (name, amount, price,i) => `
+const pizzaComponent = (name, amount, price, i) => `
 <div class="item">
 <div class="item-name">
 ${name.toUpperCase()}
@@ -26,7 +26,7 @@ TOTAL
 `;
 
 const formComponent = ` 
-<form id="input-wrapper" method="post" action="/action_page.php">
+<form id="input-wrapper">
 <label for="fname">Full name:</label>
 <input type="text" id="fname" name="fname" placeholder="Full name..." required></input><br>
 
@@ -36,7 +36,8 @@ const formComponent = `
 <label for="city">Address:</label>
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
 <textarea type="text" id="address" name="address" placeholder="Street, street number..." required></textarea><br>
-<input id="btn" type="submit" value="Place order">
+<input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
+<button id="btn">Place Order</button>
 </form>
 `;
 
@@ -52,7 +53,7 @@ const basketCardComponent = `
 `;
 
 let orderSchema = {
-  id: 1,
+  id: 5,
   pizzas: [{ id: 1, amount: 2 }],
   date: {
     year: 2022,
@@ -78,8 +79,11 @@ const loadEvent = (_) => {
   rootElement.insertAdjacentHTML("afterbegin", basketCardComponent);
 
   const contentElement = document.querySelector(".basket-content-container");
-  Object.values(sentBasket).forEach((pizza,i) =>
-    contentElement.insertAdjacentHTML("afterbegin", pizzaComponent(...pizza,i+1))
+  Object.values(sentBasket).forEach((pizza, i) =>
+    contentElement.insertAdjacentHTML(
+      "afterbegin",
+      pizzaComponent(...pizza, i + 1)
+    )
   );
 
   contentElement.insertAdjacentHTML(
@@ -88,40 +92,46 @@ const loadEvent = (_) => {
   );
 
   rootElement.insertAdjacentHTML("beforeend", formComponent);
+  const total = document.getElementById("total-value");
 
-  const clickEvent = (event) => {
+  const clickEvent = async (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
     const next = event.target.nextSibling.nextSibling;
-
     if (event.target.id.includes("add")) {
       //increase price
-      debugger;
       const priceElt =
         prev.parentElement.parentElement.parentElement.children[1];
-      let price = parseInt(priceElt.innerText.split(" ")[0]);
+      const price = parseInt(priceElt.innerText.split(" ")[0]);
       const initialQty = parseInt(prev.innerText);
-      let itemPrice = price / initialQty;
+      const itemPrice = price / initialQty;
       const newPrice = price + itemPrice;
       priceElt.innerHTML = newPrice.toString() + " Ron";
       //increase count
       prev.innerText = parseInt(prev.innerText) + 1;
+      //increase total
+      total.innerHTML =
+        parseInt(total.innerHTML.split(" ")[0]) + itemPrice + " Ron";
     } else if (event.target.id.includes("remove")) {
       //decrease price
-      debugger;
       const priceElt =
         next.parentElement.parentElement.parentElement.children[1];
-      let price = parseInt(priceElt.innerText.split(" ")[0]);
+      const price = parseInt(priceElt.innerText.split(" ")[0]);
       const initialQty = parseInt(next.innerText);
-      let itemPrice = price / initialQty;
+      const itemPrice = price / initialQty;
       const newPrice = price - itemPrice;
       priceElt.innerHTML = newPrice.toString() + " Ron";
       //decrease count
       next.innerText -= 1;
+      //decrease total
+      total.innerHTML =
+        parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
       //remove listed item if count at 0
       next.innerText < 1
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
+    } else if (event.target.id == "btn") {
+      await postOrder("/api/orders", orderSchema);
     }
     console.log("targert id", event.target.id);
     console.log("event.target", event.target);
@@ -140,4 +150,15 @@ function getTotalPrice() {
   );
   const total = prices.reduce((curr, prev) => (curr += prev), 0);
   return total;
+}
+
+async function postOrder(url = "", data = {}) {
+  const response = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json(); 
 }
