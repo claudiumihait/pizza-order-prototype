@@ -1,9 +1,7 @@
-const readFile = require('./fileReader')
+const readFile = require('./fileReader.js');
+const writeFile = require('./fileWriter.js');
 
-async function getData(path){
-    const data = await readFile(path)
-    return JSON.parse(data)
-}
 module.exports = {
-    getData,
+    readFile,
+    writeFile
 } 

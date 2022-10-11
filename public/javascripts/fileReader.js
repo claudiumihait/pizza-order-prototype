@@ -1,9 +1,13 @@
-const { readFile } = require('fs/promises');
+var fs = require('fs');
+function readFileAsync(filename) {
+    return new Promise(function(resolve, reject) {
+        fs.readFile(filename, function(err, data){
+            if (err) 
+                reject(err); 
+            else 
+                resolve(data);
+        });
+    });
+};
 
-module.exports = async (filePath) => {
-	try {
-		return await readFile(filePath);
-	} catch (error) {
-		console.error(`File reading error: ${error.message}`);
-	}
-}
+module.exports = readFileAsync;
