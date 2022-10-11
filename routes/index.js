@@ -1,3 +1,5 @@
+let basket = {};
+
 const express = require('express');
 const router = express.Router();
 const path = require('path')
@@ -19,6 +21,15 @@ router
   })
   .get('/pizzas/list', (req, res)=>{
     res.render("index");
+  })
+  .get('/basket',(req, res)=>{
+    res.body = JSON.stringify(basket);
+    res.render("basket");
+    console.log(res.body)
+  })
+  .post("/basket",(req, res)=>{
+    basket[req.body.id] = req.body.amount;
+    console.log(basket)
   })
 
 module.exports = router;

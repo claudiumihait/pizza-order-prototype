@@ -8,17 +8,37 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
   var allAllergensList = data.allergens;
 
   //function to add pizzas to order
-  function addToSessionStorage(pizza,amount) {
-    if (!sessionStorage.orderedPizzas) {
-      sessionStorage.orderedPizzas = '[]';
-    }
-    if (pizza !== '' || city.split(" ").join("").length !== 0) {
-        const data = JSON.parse(sessionStorage.orderedPizzas);
-        data.push(city);
-        const citiesSet = new Set(data);
-        sessionStorage.orderedPizzas = JSON.stringify(Array.from(citiesSet));
-    }
+  async function addToBasket(pizzaId,amount){
+    fetch(`http://127.0.0.1:3000/basket`,{
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          id:pizzaId,
+          amount:amount
+        })
+    })
   }
+
+  // function addToSessionStorage(pizzaID,amount) {
+  //   if (!sessionStorage.orderedPizzas) {
+  //     sessionStorage.orderedPizzas = '[]';
+  //   }
+  //   let data = JSON.parse(sessionStorage.orderedPizzas);
+  //   if(sessionStorage.orderedPizzas.length > 0){
+  //     var listOfPizzasIds = data.map(elem=>elem.id);
+  //     if (listOfPizzasIds.includes(pizzaID)){
+  //       data[listOfPizzasIds.indexOf(pizzaID)].amount += amount;
+  //     }else{
+  //       data.push({id:pizzaID,amount:amount});
+  //     }
+  //   }else{
+  //     data.push({id:pizzaID,amount:amount});
+  //   }
+  //   const pizzaSet = new Set(data);
+  //   sessionStorage.orderedPizzas = JSON.stringify(Array.from(pizzaSet));
+  // }
 
   //function for single pizza component in HTML
     function pizzaHTMLcomponent(pizzaObj){
@@ -68,6 +88,10 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
     document.querySelectorAll(".addButton").forEach((node,index)=>{
       node.addEventListener('click',(event)=>{
         let numberNode = document.querySelectorAll(".countDisplay")[index];
+        let pizzaName = document.querySelectorAll(".pizzaName")[index].textContent;
+        let pizzaId = allPizzasList.filter(elem => elem.name === pizzaName)[0].id;
+        let amount = numberNode.textContent;
+        addToBasket(pizzaId,amount);
         numberNode.textContent = 0;
       });
     });
