@@ -47,13 +47,14 @@ const loadEvent = (_) => {
 
   const clickEvent = (event) => {
     //handle add and remove on click
+    const prev = event.target.previousSibling.previousSibling;
+    const next = event.target.nextSibling.nextSibling;
     if (event.target.id === "add") {
-      event.target.previousSibling.previousSibling.innerText =
-        Number(event.target.previousSibling.previousSibling.innerText) + 1;
+      prev.innerText = parseInt(prev.innerText) + 1;
     } else if (event.target.id === "remove") {
-      event.target.nextSibling.nextSibling.innerText -= 1;
+      next.innerText -= 1;
       //remove listed item if count at 0
-      event.target.nextSibling.nextSibling.innerText < 1
+      next.innerText < 1
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     }
