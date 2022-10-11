@@ -8,7 +8,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
   var allAllergensList = data.allergens;
 
   //function to add pizzas to order
-  async function addToBasket(pizzaId,amount,price){
+  async function addToBasket(pizzaId,amount,price,name){
     fetch(`http://127.0.0.1:3000/basket`,{
         method: 'POST',
         headers: {
@@ -17,7 +17,8 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
         body: JSON.stringify({
           id:pizzaId,
           amount:amount,
-          price:price
+          price:price,
+          name:name
         })
     })
   }
@@ -93,7 +94,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
         let pizzaId = allPizzasList.filter(elem => elem.name === pizzaName)[0].id;
         let amount = numberNode.textContent;
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
-        addToBasket(pizzaId,amount,price);
+        addToBasket(pizzaId,amount,price,pizzaName);
         numberNode.textContent = 0;
       });
     });

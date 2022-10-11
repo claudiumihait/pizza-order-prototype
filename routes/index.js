@@ -27,7 +27,7 @@ router
     res.render("basket", { basket: JSON.stringify(basket)  });
   })
   .post("/basket", (req, res) => {
-    basket[req.body.id] = req.body.amount;
+    basket[req.body.id] = [req.body.name, req.body.amount, req.body.price];
     res.body = JSON.stringify(basket);
     console.log(basket)
   })
