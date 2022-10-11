@@ -1,22 +1,54 @@
-const pizzaTypeComponent = (list) =>
-  list.map((tag) => `<li>${tag}</li>`).join("");
+const pizzaComponent = (name, amount, price) => `
+<div class="item">
+<div class="item-name">
+${name.toUpperCase()}
+<div class="qty-container">                            
+<i id="remove" class="bi bi-patch-minus"></i>
+<div class = "qty">
+${amount}
+</div>
+<i id="add" class="bi bi-patch-plus"></i>
+</div>
+</div>
+<div class="item-value">
+${amount * price} Ron
+</div>
+</div>
+`;
 
-const pizzaComponent = ({ name, amount, price }) => `
-    <div class="item">
-        <div class="item-name">
-            ${name}
-            <div class="qty-container">                            
-                <i id="remove" class="bi bi-patch-minus"></i>
-                <div class = "qty">
-                    ${amount}
-                </div>
-                <i id="add" class="bi bi-patch-plus"></i>
-            </div>
-        </div>
-        <div class="item-value">
-            ${price} Ron
-        </div>
-    </div>
+const totalComponent = (total) => `
+<div id="total">
+<div id="total-text">
+TOTAL 
+</div>
+<div id="total-value" class="total-value">${total} Ron</div>
+</div>
+`;
+
+const formComponent = ` 
+<form id="input-wrapper" method="post" action="/action_page.php">
+<label for="fname">Full name:</label>
+<input type="text" id="fname" name="fname" placeholder="Full name..." required></input><br>
+
+<label for="email">E-mail:</label>
+<input type="text" id="email" name="email" placeholder="Email..." required></input><br>
+
+<label for="city">Address:</label>
+<input type="text" id="city" name="city" placeholder="City..." required></input><br>
+<textarea type="text" id="address" name="address" placeholder="Street, street number..." required></textarea><br>
+<input id="btn" type="submit" value="Place order">
+</form>
+`;
+
+const basketCardComponent = `
+<div class="basket-container">
+<div class = "basket-header">
+<i class="bi bi-cart"></i>
+<p> Order summary:  </p>
+</div>
+<div class ="basket-content-container">
+</div>
+</div>
 `;
 
 let orderSchema = {
@@ -40,8 +72,20 @@ let orderSchema = {
 };
 
 const loadEvent = (_) => {
+  console.log(sentBasket);
   const rootElement = document.getElementById("root");
-  
+
+  rootElement.insertAdjacentHTML("afterbegin", basketCardComponent);
+
+  const contentElement = document.querySelector(".basket-content-container");
+  Object.values(sentBasket).forEach((pizza) =>
+    contentElement.insertAdjacentHTML("afterbegin", pizzaComponent(...pizza))
+  );
+
+  contentElement.insertAdjacentHTML("beforeend", totalComponent(getTotalPrice()));
+
+  rootElement.insertAdjacentHTML("beforeend", formComponent);
+
   const clickEvent = (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
@@ -63,3 +107,13 @@ const loadEvent = (_) => {
 };
 
 window.addEventListener("DOMContentLoaded", loadEvent);
+
+function getTotalPrice() {
+  let prices = [];
+  const pricesElements = Array.from(document.querySelectorAll(".item-value"));
+  pricesElements.forEach((elt) =>
+    prices.push(parseInt(elt.innerText.split(" ")[0]))
+  );
+  const total = prices.reduce((curr, prev) => (curr += prev), 0);
+  return total;
+}
