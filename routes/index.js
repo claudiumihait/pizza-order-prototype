@@ -17,11 +17,13 @@ router
     res.redirect("/pizzas/list");
   })
   .get("/api/pizzas", async (req, res) => {
-    const pizzas = await tools.readFile(pizzasJsonPath);
+    const response = await tools.readFile(pizzasJsonPath);
+    const pizzas = await JSON.parse(response);
     res.send(pizzas.pizzas);
   })
   .get("/api/allergens", async (req, res) => {
-    const pizzas = await tools.readFile(pizzasJsonPath);
+    const response = await tools.readFile(pizzasJsonPath);
+    const pizzas = await JSON.parse(response);
     res.send(pizzas.allergens);
   })
   .get("/pizzas/list", (req, res) => {
