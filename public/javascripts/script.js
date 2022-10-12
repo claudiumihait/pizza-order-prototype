@@ -1,11 +1,11 @@
 //import all data
-// import {data} from '../pizzas.js';
-fetch("../pizzas.json").then(response =>response.json()).then((data) => {
+//import {data} from '../pizzas.js';
+Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>Promise.all(responses.map(response=>response.json()))).then(objects=>{
   //list of all pizzas from pizzas.js
-  const allPizzasList = data.pizzas;
+  const allPizzasList = objects[0];
 
   //list of all allergens from pizzas.js
-  var allAllergensList = data.allergens;
+  const allAllergensList = objects[1];
 
   //function to add pizzas to order
   async function addToBasket(pizzaId,amount,price,name){
@@ -47,7 +47,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
         return `<div class="pizzaContainer">
         <img class="pizzaImg" src="${pizzaObj.img.medium}" alt="">
         <p class="pizzaName">${pizzaObj.name}</p>
-        <hr>
+        <hr size="5">
         <p class="pizzaIngredients">${pizzaObj.ingredients.join(",")}.</p>
         <div class="buttonsContainer">
           <button class="addButton">Add to basket</button>
@@ -111,9 +111,11 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
             <label for="allergen${alergenObj.id}">${alergenObj.name}</label>`
   }
 
+  //<video class="bgVideo" autoplay muted loop><source src="https://youtu.be/2ss1BHH-leI" type="video/mp4" /></video>
   //function for putting togheter allergen components
   function allAllergenComponent(allergenList){
-    return `<div class="allAllergensContainer">${allergenList.map(allergen => allergenHTMLcomponent(allergen)).join("")}</div>`;
+    return `<div class="allAllergensContainer">${allergenList.map(allergen => allergenHTMLcomponent(allergen)).join("")}
+    </div>`;
   }
 
   //function create HTML for pizzas
@@ -137,7 +139,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
     return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><div class="orderContainer"><a href="../basket"><i class="fa-sharp fa-solid fa-basket-shopping"></i></a></div></nav></div>`
   }
 
-
+  
   function loadEvent(){
     // the HTML elements with ID are available as global variables with the ID (eg. root) but it is better if you 
     const rootElement = document.getElementById("root");
@@ -147,11 +149,10 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
     rootElement.insertAdjacentHTML("afterbegin", navBarComponent());
     //inserting HTML for pizzas
     createPizzasHTML(allPizzasList);
-
-     
   }
 
   loadEvent();
 });
+
 
 
