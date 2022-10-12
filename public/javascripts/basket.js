@@ -35,7 +35,7 @@ const formComponent = `
 
 <label for="city">Address:</label>
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
-<textarea type="text" id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
+<textarea id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
 <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
 <button id="btn">Place Order</button>
 </form>
@@ -93,11 +93,11 @@ const loadEvent = (_) => {
 
   rootElement.insertAdjacentHTML("beforeend", formComponent);
 
-  const clickEvent = async (event) => {
+  const clickEvent = (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
     const next = event.target.nextSibling.nextSibling;
-    if (event.target.id.includes("add")) {
+    if (event.target.id.includes("add-")) {
       changePricesOnAddOrRemove(prev, "add", total);
     } else if (event.target.id.includes("remove")) {
       changePricesOnAddOrRemove(next, "remove", total);
@@ -105,24 +105,34 @@ const loadEvent = (_) => {
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     } else if (event.target.id == "btn") {
-      debugger;
+      event.preventDefault();
       const nameInput = document.getElementById("fname").value;
       const emailInput = document.getElementById("email").value;
       const cityInput = document.getElementById("city").value;
       const addrInput = document.getElementById("address").value;
       const postalCodeInput = document.getElementById("postal-code").value;
-      console.log(cityInput);
       if (
-        /*isNameInputValid(nameInput) && isEmailValid(emailInput) && isCityValid(
-          cityInput
-        )*/ isPostalCodeValid(postalCodeInput)
+        isNameValid(nameInput) &&
+        isEmailValid(emailInput) &&
+        isCityValid(cityInput) &&
+        isAddressValid(addrInput) &&
+        isPostalCodeValid(postalCodeInput)
       ) {
-        console.log("isvalid");
+        console.log("valid");
+        updateSchema(
+          nameInput,
+          emailInput,
+          cityInput,
+          addrInput,
+          postalCodeInput
+        );
+        postOrder("/api/orders", orderSchema);
       } else {
         console.log("not valid");
       }
-      //await postOrder("/api/orders", orderSchema);
     }
+    console.log(event.target.id);
+    console.log(event.target);
   };
   window.addEventListener("click", clickEvent);
 };
@@ -162,6 +172,8 @@ function getTotalPrice() {
 }
 
 async function postOrder(url = "", data = {}) {
+  debugger;
+  console.log("test");
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -172,8 +184,27 @@ async function postOrder(url = "", data = {}) {
   return response.json();
 }
 
+function updateSchema(name, email, city, address, postalCode) {
+  let date = new Date();
+  //base details
+  orderSchema.date.year = date.getFullYear();
+  orderSchema.date.month = date.getMonth();
+  orderSchema.date.day = date.getMonth();
+  orderSchema.date.hour = date.getHours();
+  orderSchema.date.minute = date.getMinutes();
+  orderSchema.customer.name = name;
+  orderSchema.customer.email = email;
+  orderSchema.customer.address.city = city;
+  orderSchema.customer.address.street = address;
+  orderSchema.customer.address.postalCode = postalCode;
+  //pizza details
+  Object.keys(sentBasket).forEach((key) => {
+    orderSchema.pizzas.push({ id: key, amount: sentBasket[key][1] });
+  });
+}
+
 //-- VALIDATIONS --
-function isNameInputValid(input) {
+function isNameValid(input) {
   return /^[a-z -]+$/i.test(input);
 }
 
@@ -190,5 +221,5 @@ function isAddressValid(input) {
 }
 
 function isPostalCodeValid(input) {
-  return /^\d{9}$/.test(input);
+  return /^\d{6}$/.test(input);
 }
