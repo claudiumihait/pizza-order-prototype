@@ -52,6 +52,9 @@ router
     let fileData = await JSON.parse(response);
     fileData.orders.push({ id: tools.assignID(fileData), ...req.body });
     await tools.writeFile(ordersJsonPath, fileData);
-  });
+  })
+  .get("/empty-basket", (req, res) => {
+    res.render('empty-basket')
+  })
 
 module.exports = router;

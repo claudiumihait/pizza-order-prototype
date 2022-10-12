@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel='stylesheet' href='/stylesheets/style-emptybasket.css' />
+    <title>Empty Basket :(</title>
+</head>
+<body>
+    <h2>You have no items in basket</h2>
+    <h4>Click below button to go back</h4>
+    <img src="/images/pngfind.com-cart-png-2727925.png"/>
+    <button onclick="redirect()">START BUYING</button>
+    <script>
+        function redirect(){
+            window.location.replace("http://127.0.0.1:3000/pizzas/list")
+        }
+    </script>
+</body>
+</html>
