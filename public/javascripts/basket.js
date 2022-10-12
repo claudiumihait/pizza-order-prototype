@@ -53,8 +53,8 @@ const basketCardComponent = `
 `;
 
 let orderSchema = {
-  id: 5,
-  pizzas: [{ id: 1, amount: 2 }],
+  id: 2,
+  pizzas: [],
   date: {
     year: 2022,
     month: 6,
@@ -75,7 +75,6 @@ let orderSchema = {
 const loadEvent = (_) => {
   console.log(sentBasket);
   const rootElement = document.getElementById("root");
-
   rootElement.insertAdjacentHTML("afterbegin", basketCardComponent);
 
   const contentElement = document.querySelector(".basket-content-container");
@@ -90,43 +89,18 @@ const loadEvent = (_) => {
     "beforeend",
     totalComponent(getTotalPrice())
   );
+  const total = document.getElementById("total-value");
 
   rootElement.insertAdjacentHTML("beforeend", formComponent);
-  const total = document.getElementById("total-value");
 
   const clickEvent = async (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
     const next = event.target.nextSibling.nextSibling;
     if (event.target.id.includes("add")) {
-      //increase price
-      const priceElt =
-        prev.parentElement.parentElement.parentElement.children[1];
-      const price = parseInt(priceElt.innerText.split(" ")[0]);
-      const initialQty = parseInt(prev.innerText);
-      const itemPrice = price / initialQty;
-      const newPrice = price + itemPrice;
-      priceElt.innerHTML = newPrice.toString() + " Ron";
-      //increase count
-      prev.innerText = parseInt(prev.innerText) + 1;
-      //increase total
-      total.innerHTML =
-        parseInt(total.innerHTML.split(" ")[0]) + itemPrice + " Ron";
+      changePricesOnAddOrRemove(prev, "add", total);
     } else if (event.target.id.includes("remove")) {
-      //decrease price
-      const priceElt =
-        next.parentElement.parentElement.parentElement.children[1];
-      const price = parseInt(priceElt.innerText.split(" ")[0]);
-      const initialQty = parseInt(next.innerText);
-      const itemPrice = price / initialQty;
-      const newPrice = price - itemPrice;
-      priceElt.innerHTML = newPrice.toString() + " Ron";
-      //decrease count
-      next.innerText -= 1;
-      //decrease total
-      total.innerHTML =
-        parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
-      //remove listed item if count at 0
+      changePricesOnAddOrRemove(next, "remove", total);
       next.innerText < 1
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
@@ -141,6 +115,28 @@ const loadEvent = (_) => {
 };
 
 window.addEventListener("DOMContentLoaded", loadEvent);
+
+function changePricesOnAddOrRemove(htmlElt, method, total) {
+  const priceElt =
+    htmlElt.parentElement.parentElement.parentElement.children[1];
+  const price = parseInt(priceElt.innerText.split(" ")[0]);
+  const initialQty = parseInt(htmlElt.innerText);
+  const itemPrice = price / initialQty;
+  let newPrice;
+  if (method == "add") {
+    newPrice = price + itemPrice;
+    priceElt.innerHTML = newPrice.toString() + " Ron";
+    htmlElt.innerText = parseInt(htmlElt.innerText) + 1;
+    total.innerHTML =
+      parseInt(total.innerHTML.split(" ")[0]) + itemPrice + " Ron";
+  } else if (method == "remove") {
+    newPrice = price - itemPrice;
+    priceElt.innerHTML = newPrice.toString() + " Ron";
+    htmlElt.innerText -= 1;
+    total.innerHTML =
+      parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
+  }
+}
 
 function getTotalPrice() {
   let prices = [];
@@ -160,5 +156,5 @@ async function postOrder(url = "", data = {}) {
     },
     body: JSON.stringify(data),
   });
-  return response.json(); 
+  return response.json();
 }
