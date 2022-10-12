@@ -61,11 +61,17 @@
     display:flex;
 }
 
+.qty{
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
 /* ICONS AND BTNS */
 
-i, #btn{
+i, button{
     cursor: pointer;
 }
+
 
 /* FORM */
 #root {
