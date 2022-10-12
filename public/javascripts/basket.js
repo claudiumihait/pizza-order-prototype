@@ -53,21 +53,21 @@ const basketCardComponent = `
 `;
 
 let orderSchema = {
-  id: 2,
   pizzas: [],
   date: {
-    year: 2022,
-    month: 6,
-    day: 7,
-    hour: 18,
-    minute: 47,
+    year: 0,
+    month: 0,
+    day: 0,
+    hour: 0,
+    minute: 0,
   },
   customer: {
-    name: "John Doe",
-    email: "jd@example.com",
+    name: "",
+    email: "",
     address: {
-      city: "Palermo",
-      street: "Via Appia 6",
+      city: "",
+      street: "",
+      postalCode: 0
     },
   },
 };
@@ -172,8 +172,6 @@ function getTotalPrice() {
 }
 
 async function postOrder(url = "", data = {}) {
-  debugger;
-  console.log("test");
   const response = await fetch(url, {
     method: "POST",
     headers: {
