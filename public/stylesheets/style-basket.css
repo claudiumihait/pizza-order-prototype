@@ -63,7 +63,7 @@
 
 /* ICONS AND BTNS */
 
-#add, #remove, #btn{
+i, #btn{
     cursor: pointer;
 }
 
@@ -97,6 +97,7 @@ input, textarea {
     color: #ebeeec;
     align-items: center;
     border: 0;
+    border-radius: 18px;
     letter-spacing: 1px;
     font-size: 18px;
     font-weight: 600;
