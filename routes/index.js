@@ -12,11 +12,11 @@ router
     res.redirect("/pizzas/list");
   })
   .get('/api/pizzas', async (req, res) => {
-    const pizzas = await tools.getData(jsonPath);
+    const pizzas = await tools.readFile(jsonPath);
     res.send(pizzas.pizzas);
   })
   .get('/api/allergens', async (req, res) => {
-    const pizzas = await tools.getData(jsonPath);
+    const pizzas = await tools.readFile(jsonPath);
     res.send(pizzas.allergens);
   })
   .get('/pizzas/list', (req, res) => {
@@ -27,7 +27,11 @@ router
     res.render("basket", { basket: JSON.stringify(basket)  });
   })
   .post("/basket", (req, res) => {
-    basket[req.body.id] = [req.body.name, req.body.amount, req.body.price];
+    if(basket[req.body.id]){
+      basket[req.body.id][1] += req.body.amount;
+    }else{
+      basket[req.body.id] = [req.body.name, req.body.amount, req.body.price];
+    }
     res.body = JSON.stringify(basket);
     console.log(basket)
   })
