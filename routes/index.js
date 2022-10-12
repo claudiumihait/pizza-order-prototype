@@ -50,7 +50,7 @@ router
   .post("/api/orders", async (req, res) => {
     const response = await tools.readFile(ordersJsonPath);
     let fileData = await JSON.parse(response);
-    console.log(fileData)
+    req.body.id = tools.assignID(fileData);
     fileData.orders.push(req.body);
     await tools.writeFile(ordersJsonPath, fileData);
   });
