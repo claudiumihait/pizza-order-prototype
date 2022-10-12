@@ -35,7 +35,7 @@ const formComponent = `
 
 <label for="city">Address:</label>
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
-<textarea type="text" id="address" name="address" placeholder="Street, street number..." required></textarea><br>
+<textarea type="text" id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
 <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
 <button id="btn">Place Order</button>
 </form>
@@ -105,11 +105,24 @@ const loadEvent = (_) => {
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     } else if (event.target.id == "btn") {
-      await postOrder("/api/orders", orderSchema);
+      debugger;
+      const nameInput = document.getElementById("fname").value;
+      const emailInput = document.getElementById("email").value;
+      const cityInput = document.getElementById("city").value;
+      const addrInput = document.getElementById("address").value;
+      const postalCodeInput = document.getElementById("postal-code").value;
+      console.log(cityInput);
+      if (
+        /*isNameInputValid(nameInput) && isEmailValid(emailInput) && isCityValid(
+          cityInput
+        )*/ isPostalCodeValid(postalCodeInput)
+      ) {
+        console.log("isvalid");
+      } else {
+        console.log("not valid");
+      }
+      //await postOrder("/api/orders", orderSchema);
     }
-    console.log("targert id", event.target.id);
-    console.log("event.target", event.target);
-    console.log("nextsibling", event.target.nextSibling);
   };
   window.addEventListener("click", clickEvent);
 };
@@ -157,4 +170,25 @@ async function postOrder(url = "", data = {}) {
     body: JSON.stringify(data),
   });
   return response.json();
+}
+
+//-- VALIDATIONS --
+function isNameInputValid(input) {
+  return /^[a-z -]+$/i.test(input);
+}
+
+function isEmailValid(input) {
+  return /^((\w)+(\.)?(\w)+)(@){1}([a-z])+(\.){1}([a-zA-Z]){2,3}$/i.test(input);
+}
+
+function isCityValid(input) {
+  return /^[a-z]+([ -][a-z]+)*$/i.test(input);
+}
+
+function isAddressValid(input) {
+  return /[a-z0-9'\.\-\s\,]/i.test(input);
+}
+
+function isPostalCodeValid(input) {
+  return /^\d{9}$/.test(input);
 }
