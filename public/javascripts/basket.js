@@ -35,7 +35,7 @@ const formComponent = `
 
 <label for="city">Address:</label>
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
-<textarea type="text" id="address" name="address" placeholder="Street, street number..." required></textarea><br>
+<textarea id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
 <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
 <button id="btn">Place Order</button>
 </form>
@@ -53,8 +53,8 @@ const basketCardComponent = `
 `;
 
 let orderSchema = {
-  id: 5,
-  pizzas: [{ id: 1, amount: 2 }],
+  id: 2,
+  pizzas: [],
   date: {
     year: 2022,
     month: 6,
@@ -75,7 +75,6 @@ let orderSchema = {
 const loadEvent = (_) => {
   console.log(sentBasket);
   const rootElement = document.getElementById("root");
-
   rootElement.insertAdjacentHTML("afterbegin", basketCardComponent);
 
   const contentElement = document.querySelector(".basket-content-container");
@@ -90,57 +89,77 @@ const loadEvent = (_) => {
     "beforeend",
     totalComponent(getTotalPrice())
   );
-
-  rootElement.insertAdjacentHTML("beforeend", formComponent);
   const total = document.getElementById("total-value");
 
-  const clickEvent = async (event) => {
+  rootElement.insertAdjacentHTML("beforeend", formComponent);
+
+  const clickEvent = (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
     const next = event.target.nextSibling.nextSibling;
-    if (event.target.id.includes("add")) {
-      //increase price
-      const priceElt =
-        prev.parentElement.parentElement.parentElement.children[1];
-      const price = parseInt(priceElt.innerText.split(" ")[0]);
-      const initialQty = parseInt(prev.innerText);
-      const itemPrice = price / initialQty;
-      const newPrice = price + itemPrice;
-      priceElt.innerHTML = newPrice.toString() + " Ron";
-      //increase count
-      prev.innerText = parseInt(prev.innerText) + 1;
-      //increase total
-      total.innerHTML =
-        parseInt(total.innerHTML.split(" ")[0]) + itemPrice + " Ron";
+    if (event.target.id.includes("add-")) {
+      changePricesOnAddOrRemove(prev, "add", total);
     } else if (event.target.id.includes("remove")) {
-      //decrease price
-      const priceElt =
-        next.parentElement.parentElement.parentElement.children[1];
-      const price = parseInt(priceElt.innerText.split(" ")[0]);
-      const initialQty = parseInt(next.innerText);
-      const itemPrice = price / initialQty;
-      const newPrice = price - itemPrice;
-      priceElt.innerHTML = newPrice.toString() + " Ron";
-      //decrease count
-      next.innerText -= 1;
-      //decrease total
-      total.innerHTML =
-        parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
-      //remove listed item if count at 0
+      changePricesOnAddOrRemove(next, "remove", total);
       next.innerText < 1
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     } else if (event.target.id == "btn") {
-      await postOrder("/api/orders", orderSchema);
+      event.preventDefault();
+      const nameInput = document.getElementById("fname").value;
+      const emailInput = document.getElementById("email").value;
+      const cityInput = document.getElementById("city").value;
+      const addrInput = document.getElementById("address").value;
+      const postalCodeInput = document.getElementById("postal-code").value;
+      if (
+        isNameValid(nameInput) &&
+        isEmailValid(emailInput) &&
+        isCityValid(cityInput) &&
+        isAddressValid(addrInput) &&
+        isPostalCodeValid(postalCodeInput)
+      ) {
+        console.log("valid");
+        updateSchema(
+          nameInput,
+          emailInput,
+          cityInput,
+          addrInput,
+          postalCodeInput
+        );
+        postOrder("/api/orders", orderSchema);
+      } else {
+        console.log("not valid");
+      }
     }
-    console.log("targert id", event.target.id);
-    console.log("event.target", event.target);
-    console.log("nextsibling", event.target.nextSibling);
+    console.log(event.target.id);
+    console.log(event.target);
   };
   window.addEventListener("click", clickEvent);
 };
 
 window.addEventListener("DOMContentLoaded", loadEvent);
+
+function changePricesOnAddOrRemove(htmlElt, method, total) {
+  const priceElt =
+    htmlElt.parentElement.parentElement.parentElement.children[1];
+  const price = parseInt(priceElt.innerText.split(" ")[0]);
+  const initialQty = parseInt(htmlElt.innerText);
+  const itemPrice = price / initialQty;
+  let newPrice;
+  if (method == "add") {
+    newPrice = price + itemPrice;
+    priceElt.innerHTML = newPrice.toString() + " Ron";
+    htmlElt.innerText = parseInt(htmlElt.innerText) + 1;
+    total.innerHTML =
+      parseInt(total.innerHTML.split(" ")[0]) + itemPrice + " Ron";
+  } else if (method == "remove") {
+    newPrice = price - itemPrice;
+    priceElt.innerHTML = newPrice.toString() + " Ron";
+    htmlElt.innerText -= 1;
+    total.innerHTML =
+      parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
+  }
+}
 
 function getTotalPrice() {
   let prices = [];
@@ -153,6 +172,8 @@ function getTotalPrice() {
 }
 
 async function postOrder(url = "", data = {}) {
+  debugger;
+  console.log("test");
   const response = await fetch(url, {
     method: "POST",
     headers: {
@@ -160,5 +181,45 @@ async function postOrder(url = "", data = {}) {
     },
     body: JSON.stringify(data),
   });
-  return response.json(); 
+  return response.json();
+}
+
+function updateSchema(name, email, city, address, postalCode) {
+  let date = new Date();
+  //base details
+  orderSchema.date.year = date.getFullYear();
+  orderSchema.date.month = date.getMonth();
+  orderSchema.date.day = date.getMonth();
+  orderSchema.date.hour = date.getHours();
+  orderSchema.date.minute = date.getMinutes();
+  orderSchema.customer.name = name;
+  orderSchema.customer.email = email;
+  orderSchema.customer.address.city = city;
+  orderSchema.customer.address.street = address;
+  orderSchema.customer.address.postalCode = postalCode;
+  //pizza details
+  Object.keys(sentBasket).forEach((key) => {
+    orderSchema.pizzas.push({ id: key, amount: sentBasket[key][1] });
+  });
+}
+
+//-- VALIDATIONS --
+function isNameValid(input) {
+  return /^[a-z -]+$/i.test(input);
+}
+
+function isEmailValid(input) {
+  return /^((\w)+(\.)?(\w)+)(@){1}([a-z])+(\.){1}([a-zA-Z]){2,3}$/i.test(input);
+}
+
+function isCityValid(input) {
+  return /^[a-z]+([ -][a-z]+)*$/i.test(input);
+}
+
+function isAddressValid(input) {
+  return /[a-z0-9'\.\-\s\,]/i.test(input);
+}
+
+function isPostalCodeValid(input) {
+  return /^\d{6}$/.test(input);
 }
