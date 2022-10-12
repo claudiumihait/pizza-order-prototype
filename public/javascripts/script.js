@@ -92,7 +92,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
         let numberNode = document.querySelectorAll(".countDisplay")[index];
         let pizzaName = document.querySelectorAll(".pizzaName")[index].textContent;
         let pizzaId = allPizzasList.filter(elem => elem.name === pizzaName)[0].id;
-        let amount = numberNode.textContent;
+        let amount = parseInt(numberNode.textContent);
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         addToBasket(pizzaId,amount,price,pizzaName);
         numberNode.textContent = 0;
@@ -134,7 +134,7 @@ fetch("../pizzas.json").then(response =>response.json()).then((data) => {
 
   //function to create nav element
   function navBarComponent(){
-    return `<div class="navBarContainer"><nav><h1>Title</h1><div class="orderContainer"><button class="requestOrder">Order Now</button><img src="" alt=""></div></nav></div>`
+    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><div class="orderContainer"><a href="../basket"><i class="fa-sharp fa-solid fa-basket-shopping"></i></a></div></nav></div>`
   }
 
 
