@@ -110,17 +110,44 @@ const loadEvent = (_) => {
         : true;
     } else if (event.target.id == "btn") {
       event.preventDefault();
-      const nameInput = document.getElementById("fname").value;
-      const emailInput = document.getElementById("email").value;
-      const cityInput = document.getElementById("city").value;
-      const addrInput = document.getElementById("address").value;
-      const postalCodeInput = document.getElementById("postal-code").value;
+      const nameInput = document.getElementById("fname");
+      const emailInput = document.getElementById("email");
+      const cityInput = document.getElementById("city");
+      const addrInput = document.getElementById("address");
+      const postalCodeInput = document.getElementById("postal-code");
+
+      //alert user of valid/not valid inputs
+      isNameValid(nameInput.value)
+        ? (nameInput.style.border = "3px solid #00ff00")
+        : (nameInput.style.border = "3px solid red");
+
+      isEmailValid(emailInput.value)
+        ? (emailInput.style.border = "2px solid #00ff00")
+        : (emailInput.style.border = "2px solid red");
+
+      isEmailValid(emailInput.value)
+        ? (emailInput.style.border = "2px solid #00ff00")
+        : (emailInput.style.border = "2px solid red");
+
+      isCityValid(cityInput.value)
+        ? (cityInput.style.border = "2px solid #00ff00")
+        : (cityInput.style.border = "2px solid red");
+
+      isAddressValid(addrInput.value)
+        ? (addrInput.style.border = "2px solid #00ff00")
+        : (addrInput.style.border = "2px solid red");
+
+      isPostalCodeValid(postalCodeInput.value)
+        ? (postalCodeInput.style.border = "2px solid #00ff00")
+        : (postalCodeInput.style.border = "2px solid red");
+
+      //if all valid, send order
       if (
-        isNameValid(nameInput) &&
-        isEmailValid(emailInput) &&
-        isCityValid(cityInput) &&
-        isAddressValid(addrInput) &&
-        isPostalCodeValid(postalCodeInput)
+        isNameValid(nameInput.value) &&
+        isEmailValid(emailInput.value) &&
+        isCityValid(cityInput.value) &&
+        isAddressValid(addrInput.value) &&
+        isPostalCodeValid(postalCodeInput.value)
       ) {
         console.log("valid");
         updateSchema(
