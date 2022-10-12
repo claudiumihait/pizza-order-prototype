@@ -48,12 +48,22 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         <img class="pizzaImg" src="${pizzaObj.img.medium}" alt="">
         <p class="pizzaName">${pizzaObj.name}</p>
         <hr size="5">
-        <p class="pizzaIngredients">${pizzaObj.ingredients.join(",")}.</p>
+        <p class="pizzaIngredients">${pizzaObj.ingredients.join(", ")}.</p>
         <div class="buttonsContainer">
-          <button class="addButton">Add to basket</button>
+        <button class="addButton">
+        <div class="svg-wrapper-1">
+          <div class="svg-wrapper">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+              <path fill="none" d="M0 0h24v24H0z"></path>
+              <path fill="currentColor" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+            </svg>
+          </div>
+        </div>
+        <span>Add to basket</span>
+      </button>
           <div class="counterContainer">
             <button class="increment">+</button>  
-            <h2 class="countDisplay">0</h2>
+            <h2 class="countDisplay">1</h2>
             <button class="decrement">-</button>
           </div>
         </div>
@@ -81,7 +91,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
     document.querySelectorAll(".decrement").forEach((node,index)=>{
       node.addEventListener('click',(event)=>{
         let numberNode = document.querySelectorAll(".countDisplay")[index];
-        if(parseInt(numberNode.textContent) !== 0){
+        if(parseInt(numberNode.textContent) > 1){
           numberNode.textContent = String(parseInt(numberNode.textContent)-1);
         }
       });
@@ -95,7 +105,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         let amount = parseInt(numberNode.textContent);
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         addToBasket(pizzaId,amount,price,pizzaName);
-        numberNode.textContent = 0;
+        numberNode.textContent = "1";
       });
     });
   }
