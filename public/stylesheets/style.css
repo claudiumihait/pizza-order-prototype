@@ -1,8 +1,65 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,500;1,300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
 }
 
-a {
-  color: #00B7FF;
+/* #root{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.navBarContainer{
+    height: 10%;
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px;
+    background-color: rgb(149, 1, 1);
+}
+
+.allAllergensContainer{
+    height: 15%; 
+} */
+
+#root{
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.navBarContainer{
+    height: 10%;
+    background-color: rgb(149, 1, 1);
+}
+
+.allAllergensContainer{
+    height: 15%;
+}
+
+.allPizzasContainer{
+    height: 75%;
+    background-image: url("https://i.pinimg.com/originals/f9/4f/f6/f94ff64779390388ed195ff704c44c2b.jpg");
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.pizzaContainer{
+    width: 22%;
+    height: 31%;
+    background-color: white;
+    display:flex;
+    flex-direction: column;
+}
+.pizzaImg{
+    width: 100%;
+    height: 60%;
 }
