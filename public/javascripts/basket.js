@@ -67,7 +67,7 @@ let orderSchema = {
     address: {
       city: "",
       street: "",
-      postalCode: 0
+      postalCode: 0,
     },
   },
 };
@@ -84,6 +84,10 @@ const loadEvent = (_) => {
       pizzaComponent(...pizza, i + 1)
     )
   );
+  //redirect if there are no pizzas in basket
+  document.querySelectorAll(".item").length == 0
+    ? window.location.replace("http://127.0.0.1:3000/empty-basket")
+    : null;
 
   contentElement.insertAdjacentHTML(
     "beforeend",
