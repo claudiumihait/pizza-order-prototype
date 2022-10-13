@@ -9,7 +9,7 @@ hr{
     width: 90%;
     margin-left: 5%;
     margin-right: 5%;
-    background-color: rgb(216, 33, 72);
+    background-color: rgb(252, 0, 33);
     border: none;
     box-shadow: 0px 2px 5px gray;
     margin-bottom: 5px;
@@ -24,7 +24,13 @@ hr{
 }
 
 .navBarContainer{
+    z-index: 100;
+    width: 1920px;
+    position: fixed;
     min-height: 90px;
+    background-color: red;
+    display: flex;
+    flex-direction: column;
 }
 
 .allAllergensContainer{
@@ -73,7 +79,7 @@ hr{
     }
 }
 .toggler {
-    width: 72px;
+    width: 92px;
     margin: 40px auto;
   }
 .toggler input {
@@ -214,7 +220,7 @@ hr{
 .addButton {
     font-family: inherit;
     font-size: 20px;
-    background: rgb(149, 1, 1);
+    background: rgb(252, 0, 33);
     color: whitesmoke;
     padding: 0.7em 1em;
     padding-left: 0.9em;
