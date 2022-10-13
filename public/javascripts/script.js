@@ -2,7 +2,14 @@
 //import {data} from '../pizzas.js';
 Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>Promise.all(responses.map(response=>response.json()))).then(objects=>{
   //variable to check if addButton was pressed and make sum all added pizzas
-  var sumPrice = 0;
+  var sumPrice
+  if(Object.keys(sentBasket).length === 0){
+     sumPrice = 0;
+  }else{
+     sumPrice = Object.values(sentBasket).map(item => item[1]*item[2]).reduce((a,b)=>a+b,0);
+
+  }
+  
 
   //list of all pizzas from pizzas.json
   const allPizzasList = objects[0];
@@ -48,10 +55,10 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
   //function for single pizza component in HTML
     function pizzaHTMLcomponent(pizzaObj){
         return `<div class="pizzaContainer">
-        <div class="cardHeader">
-          <img class="pizzaImg" src="${pizzaObj.img.medium}" alt="">
-          <p class="pizzaName">${pizzaObj.name}</p>
-          <hr size="5">
+        <div>
+        <img class="pizzaImg" src="${pizzaObj.img.medium}" alt="">
+        <p class="pizzaName">${pizzaObj.name}</p>
+        <hr size="5">
         </div>
         <p class="pizzaIngredients">${pizzaObj.ingredients.join(", ")}.</p>
         <div class="buttonsContainer">
@@ -65,7 +72,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
             </div>
           </div>
           <span>Add to basket</span>
-          <span class="pizzaPrice"><i class="fa-solid fa-wallet"></i> ${pizzaObj.price} ron</span>
+          <span class="pizzaPrice"><i class="fa-solid fa-wallet"></i> ${pizzaObj.price} RON</span>
         </button>
           <div class="counterContainer">
             <button class="increment">
@@ -108,7 +115,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         if(parseInt(numberNode.textContent) > 1){
           numberNode.textContent = String(parseInt(numberNode.textContent)-1);
-          document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price*parseInt(numberNode.textContent)} ron`;
+          document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price*parseInt(numberNode.textContent)} RON`;
         }
       });
     });
@@ -123,7 +130,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         sumPrice += parseInt(numberNode.textContent)*price;
         document.querySelector(".finalPrice").textContent = `${sumPrice} ron`
         addToBasket(pizzaId,amount,price,pizzaName);
-        document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price} ron`;
+        document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price} RON`;
         numberNode.textContent = "1";
       });
     });
@@ -148,7 +155,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
                     </svg>
                 </label>
             </div>
-            <span>${alergenObj.name}</span>`
+            <span class="allergenName">${alergenObj.name}</span>`
     // `<input type="checkbox" class="allergenCheck" name="allergen${alergenObj.id}" value=${alergenObj.name}>
     //         <label for="allergen${alergenObj.id}">${alergenObj.name}</label>`
   }
@@ -183,7 +190,11 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
 
   //function to create nav element
   function navBarComponent(){
-    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">0 ron</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="30" height="30"><path fill="none" d="M0 0h24v24H0z"></path><path fill="white" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/></svg></span></button></nav></div>`
+    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">${parseInt(sumPrice)} RON</span><span class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="30" height="30">
+    <path fill="none" d="M0 0h24v24H0z"></path>
+    <path fill="White" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+  </svg></span></button></nav></div>`
   }
 
   //function create HTML for nav

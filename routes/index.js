@@ -27,7 +27,7 @@ router
     res.send(pizzas.allergens);
   })
   .get("/pizzas/list", (req, res) => {
-    res.render("index");
+    res.render("index", { basket: JSON.stringify(basket) });
   })
   .get("/basket", (req, res) => {
     // res.body = JSON.stringify(basket);
