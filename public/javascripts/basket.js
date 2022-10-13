@@ -103,7 +103,7 @@ const loadEvent = (_) => {
   const addrInput = document.getElementById("address");
   const postalCodeInput = document.getElementById("postal-code");
   const inputs = [nameInput, emailInput, cityInput, addrInput, postalCodeInput];
-  //alert user valid/invalid inputs 
+  //alert user valid/invalid inputs
   inputs.forEach((input, i) => {
     input.addEventListener("input", () => {
       validations[i](input.value)
@@ -138,23 +138,24 @@ const loadEvent = (_) => {
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     } else if (event.target.id == "btn") {
-      event.preventDefault();
       //if all valid, send order
+      event.preventDefault();
       if (
-        isNameValid(nameInput.value) &&
-        isEmailValid(emailInput.value) &&
-        isCityValid(cityInput.value) &&
-        isAddressValid(addrInput.value) &&
-        isPostalCodeValid(postalCodeInput.value)
+        validations[0](nameInput.value) &&
+        validations[1](emailInput.value) &&
+        validations[2](cityInput.value) &&
+        validations[3](addrInput.value) &&
+        validations[4](postalCodeInput.value)
       ) {
         updateSchema(
-          nameInput,
-          emailInput,
-          cityInput,
-          addrInput,
-          postalCodeInput
+          nameInput.value.trim(),
+          emailInput.value.trim(),
+          cityInput.value.trim(),
+          addrInput.value.trim(),
+          postalCodeInput.value.trim()
         );
         postOrder("/api/orders", orderSchema);
+        window.location.replace("http://127.0.0.1:3000/order-submitted");
       }
     }
     console.log(event.target.id);

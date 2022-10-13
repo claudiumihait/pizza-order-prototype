@@ -79,6 +79,40 @@ i {
     cursor: pointer;
 }
 
+.valid {
+    background-color: #1ca57d;
+    color: #ebeeec;
+    align-items: center;
+    border: 0;
+    border-radius: 18px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.valid:hover {
+    background-color: #25daa3;
+    cursor: pointer;
+}
+
+.invalid {
+    background-color: gray;
+    color: #ebeeec;
+    align-items: center;
+    border: 0;
+    border-radius: 18px;
+    letter-spacing: 1px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: default;
+    color: black;
+}
+
+.invalid:hover {
+    background-color: gray;
+    cursor: default;
+}
 
 /* FORM */
 #root {
@@ -107,59 +141,5 @@ input, textarea {
 
 p {
     width: 100%;
-}
-
-/* #btn {
-    background-color: #1ca57d;
-    color: #ebeeec;
-    align-items: center;
-    border: 0;
-    border-radius: 18px;
-    letter-spacing: 1px;
-    font-size: 18px;
-    font-weight: 600;
-}
-
-#btn:hover {
-    background-color: #25daa3; 
-} */
-
-p {
-    width: 100%;
-}
-
-.valid {
-    background-color: #1ca57d;
-    color: #ebeeec;
-    align-items: center;
-    border: 0;
-    border-radius: 18px;
-    letter-spacing: 1px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-}
-
-.valid:hover {
-    background-color: #25daa3;
-    cursor: pointer;
-}
-
-.invalid {
-    background-color: gray;
-    color: #ebeeec;
-    align-items: center;
-    border: 0;
-    border-radius: 18px;
-    letter-spacing: 1px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: default;
-    color:black;
-}
-
-.invalid:hover{
-    background-color: gray;
-    cursor:default;
 }
 

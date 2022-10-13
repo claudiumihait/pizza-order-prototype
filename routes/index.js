@@ -50,11 +50,17 @@ router
   .post("/api/orders", async (req, res) => {
     const response = await tools.readFile(ordersJsonPath);
     let fileData = await JSON.parse(response);
-    fileData.orders.push({ id: tools.assignID(fileData), ...req.body });
+    const ID = tools.assignID(fileData)
+      ? tools.assignID(fileData)
+      : fileData.orders.length + 1;
+    fileData.orders.push({ id: ID, ...req.body });
     await tools.writeFile(ordersJsonPath, fileData);
   })
   .get("/empty-basket", (req, res) => {
-    res.render('empty-basket')
+    res.render("empty-basket");
   })
+  .get("/order-submitted", (req, res) => {
+    res.render("order-submitted");
+  });
 
 module.exports = router;
