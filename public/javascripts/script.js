@@ -135,7 +135,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
   //function for single allergen component
   function allergenHTMLcomponent(alergenObj){
     return `<div class="toggler">
-                <input class="allergenCheck" name="allergen${alergenObj.id}" type="checkbox" value=${alergenObj.name}>
+                <input class="allergenCheck" id="allergen${alergenObj.id}" name="allergen${alergenObj.id}" type="checkbox" value=${alergenObj.name}>
                 <label for="allergen${alergenObj.id}">
                     <svg class="toggler-on" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
                         <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
@@ -145,7 +145,8 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
                         <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
                     </svg>
                 </label>
-            </div>`
+            </div>
+            <span>${alergenObj.name}</span>`
     // `<input type="checkbox" class="allergenCheck" name="allergen${alergenObj.id}" value=${alergenObj.name}>
     //         <label for="allergen${alergenObj.id}">${alergenObj.name}</label>`
   }
