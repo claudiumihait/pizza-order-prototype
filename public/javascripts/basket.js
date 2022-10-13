@@ -37,7 +37,7 @@ const formComponent = `
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
 <textarea id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
 <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
-<button id="btn">Place Order</button>
+<button id="btn" class="invalid" disabled>Place Order</button>
 </form>
 `;
 
@@ -102,17 +102,29 @@ const loadEvent = (_) => {
   const cityInput = document.getElementById("city");
   const addrInput = document.getElementById("address");
   const postalCodeInput = document.getElementById("postal-code");
-
-  //alert user valid/invalid inputs
-  [nameInput, emailInput, cityInput, addrInput, postalCodeInput].forEach(
-    (input, i) => {
-      input.addEventListener("input", () => {
-        validations[i](input.value)
-          ? (input.style.border = "2px solid #1ca57d")
-          : (input.style.border = "2px solid #b5393d");
-      });
-    }
-  );
+  const inputs = [nameInput, emailInput, cityInput, addrInput, postalCodeInput];
+  //alert user valid/invalid inputs 
+  inputs.forEach((input, i) => {
+    input.addEventListener("input", () => {
+      validations[i](input.value)
+        ? (input.style.border = "2px solid #1ca57d")
+        : (input.style.border = "2px solid #b5393d");
+      //enable button on valid inputs
+      if (
+        inputs.every(
+          (input) => input.style.border == "2px solid rgb(28, 165, 125)"
+        )
+      ) {
+        document.getElementById("btn").classList.add("valid");
+        document.getElementById("btn").removeAttribute("disabled");
+        document.getElementById("btn").classList.remove("invalid");
+      } else {
+        document.getElementById("btn").classList.add("invalid");
+        document.getElementById("btn").setAttribute("disabled");
+        document.getElementById("btn").classList.remove("valid");
+      }
+    });
+  });
 
   const clickEvent = (event) => {
     //handle add and remove on click
@@ -135,7 +147,6 @@ const loadEvent = (_) => {
         isAddressValid(addrInput.value) &&
         isPostalCodeValid(postalCodeInput.value)
       ) {
-        console.log("valid");
         updateSchema(
           nameInput,
           emailInput,
