@@ -35,14 +35,15 @@ const formComponent = `
 
 <label for="city">Address:</label>
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
-<textarea id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
+<textarea id="address" name="address" placeholder="Street, street number, flat, ..." required></textarea><br>
 <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
-<button id="btn">Place Order</button>
+<button id="btn" class="invalid" disabled>Place Order</button>
 </form>
 `;
 
 const basketCardComponent = `
 <div class="basket-container">
+<a href="http://127.0.0.1:3000/pizzas/list">GO BACK</a>
 <div class = "basket-header">
 <i class="bi bi-cart"></i>
 <p> Order summary:  </p>
@@ -97,6 +98,35 @@ const loadEvent = (_) => {
 
   rootElement.insertAdjacentHTML("beforeend", formComponent);
 
+  const nameInput = document.getElementById("fname");
+  const emailInput = document.getElementById("email");
+  const cityInput = document.getElementById("city");
+  const addrInput = document.getElementById("address");
+  const postalCodeInput = document.getElementById("postal-code");
+  const inputs = [nameInput, emailInput, cityInput, addrInput, postalCodeInput];
+  //alert user valid/invalid inputs
+  inputs.forEach((input, i) => {
+    input.addEventListener("input", () => {
+      validations[i](input.value)
+        ? (input.style.border = "2px solid #1ca57d")
+        : (input.style.border = "2px solid #b5393d");
+      //enable button on valid inputs
+      if (
+        inputs.every(
+          (input) => input.style.border == "2px solid rgb(28, 165, 125)"
+        )
+      ) {
+        document.getElementById("btn").classList.add("valid");
+        document.getElementById("btn").removeAttribute("disabled");
+        document.getElementById("btn").classList.remove("invalid");
+      } else {
+        document.getElementById("btn").classList.add("invalid");
+        document.getElementById("btn").setAttribute("disabled");
+        document.getElementById("btn").classList.remove("valid");
+      }
+    });
+  });
+
   const clickEvent = (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
@@ -109,30 +139,24 @@ const loadEvent = (_) => {
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     } else if (event.target.id == "btn") {
+      //if all valid, send order
       event.preventDefault();
-      const nameInput = document.getElementById("fname").value;
-      const emailInput = document.getElementById("email").value;
-      const cityInput = document.getElementById("city").value;
-      const addrInput = document.getElementById("address").value;
-      const postalCodeInput = document.getElementById("postal-code").value;
       if (
-        isNameValid(nameInput) &&
-        isEmailValid(emailInput) &&
-        isCityValid(cityInput) &&
-        isAddressValid(addrInput) &&
-        isPostalCodeValid(postalCodeInput)
+        validations[0](nameInput.value) &&
+        validations[1](emailInput.value) &&
+        validations[2](cityInput.value) &&
+        validations[3](addrInput.value) &&
+        validations[4](postalCodeInput.value)
       ) {
-        console.log("valid");
         updateSchema(
-          nameInput,
-          emailInput,
-          cityInput,
-          addrInput,
-          postalCodeInput
+          nameInput.value.trim(),
+          emailInput.value.trim(),
+          cityInput.value.trim(),
+          addrInput.value.trim(),
+          postalCodeInput.value.trim()
         );
         postOrder("/api/orders", orderSchema);
-      } else {
-        console.log("not valid");
+        window.location.replace("http://127.0.0.1:3000/order-submitted");
       }
     }
     console.log(event.target.id);
@@ -164,7 +188,7 @@ function changePricesOnAddOrRemove(htmlElt, method, total) {
       parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
   }
 }
-
+function highlightValidInvalidInputs() {}
 function getTotalPrice() {
   let prices = [];
   const pricesElements = Array.from(document.querySelectorAll(".item-value"));
@@ -206,22 +230,27 @@ function updateSchema(name, email, city, address, postalCode) {
 }
 
 //-- VALIDATIONS --
-function isNameValid(input) {
-  return /^[a-z -]+$/i.test(input);
-}
 
-function isEmailValid(input) {
-  return /^((\w)+(\.)?(\w)+)(@){1}([a-z])+(\.){1}([a-zA-Z]){2,3}$/i.test(input);
-}
+const validations = [
+  function isNameValid(input) {
+    return /^[a-z -]{3,}$/i.test(input);
+  },
 
-function isCityValid(input) {
-  return /^[a-z]+([ -][a-z]+)*$/i.test(input);
-}
+  function isEmailValid(input) {
+    return /^((\w)+(\.)?(\w)+)(@){1}([a-z])+(\.){1}([a-zA-Z]){2,3}$/i.test(
+      input
+    );
+  },
 
-function isAddressValid(input) {
-  return /[a-z0-9'\.\-\s\,]/i.test(input);
-}
+  function isCityValid(input) {
+    return /^[a-z]{2,}([ -][a-z]+)*$/i.test(input);
+  },
 
-function isPostalCodeValid(input) {
-  return /^\d{6}$/.test(input);
-}
+  function isAddressValid(input) {
+    return /^([a-z0-9'\.\-\s\,]){6,}$/i.test(input);
+  },
+
+  function isPostalCodeValid(input) {
+    return /^\d{6}$/.test(input);
+  },
+];

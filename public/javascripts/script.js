@@ -2,7 +2,14 @@
 //import {data} from '../pizzas.js';
 Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>Promise.all(responses.map(response=>response.json()))).then(objects=>{
   //variable to check if addButton was pressed and make sum all added pizzas
-  var sumPrice = 0;
+  var sumPrice
+  if(Object.keys(sentBasket).length === 0){
+     sumPrice = 0;
+  }else{
+     sumPrice = Object.values(sentBasket).map(item => item[1]*item[2]).reduce((a,b)=>a+b,0);
+
+  }
+  
 
   //list of all pizzas from pizzas.json
   const allPizzasList = objects[0];
@@ -183,7 +190,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
 
   //function to create nav element
   function navBarComponent(){
-    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">0 RON</span><span class="icon">
+    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">${parseInt(sumPrice)} RON</span><span class="icon">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="30" height="30">
     <path fill="none" d="M0 0h24v24H0z"></path>
     <path fill="White" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
