@@ -48,9 +48,11 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
   //function for single pizza component in HTML
     function pizzaHTMLcomponent(pizzaObj){
         return `<div class="pizzaContainer">
+        <div>
         <img class="pizzaImg" src="${pizzaObj.img.medium}" alt="">
         <p class="pizzaName">${pizzaObj.name}</p>
         <hr size="5">
+        </div>
         <p class="pizzaIngredients">${pizzaObj.ingredients.join(", ")}.</p>
         <div class="buttonsContainer">
         <button class="addButton">
@@ -63,7 +65,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
             </div>
           </div>
           <span>Add to basket</span>
-          <span class="pizzaPrice"><i class="fa-solid fa-wallet"></i> ${pizzaObj.price} ron</span>
+          <span class="pizzaPrice"><i class="fa-solid fa-wallet"></i> ${pizzaObj.price} RON</span>
         </button>
           <div class="counterContainer">
             <button class="increment">
@@ -106,7 +108,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         if(parseInt(numberNode.textContent) > 1){
           numberNode.textContent = String(parseInt(numberNode.textContent)-1);
-          document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price*parseInt(numberNode.textContent)} ron`;
+          document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price*parseInt(numberNode.textContent)} RON`;
         }
       });
     });
@@ -121,7 +123,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         sumPrice += parseInt(numberNode.textContent)*price;
         document.querySelector(".finalPrice").textContent = `${sumPrice} ron`
         addToBasket(pizzaId,amount,price,pizzaName);
-        document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price} ron`;
+        document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price} RON`;
         numberNode.textContent = "1";
       });
     });
@@ -137,16 +139,16 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
     return `<div class="toggler">
                 <input class="allergenCheck" id="allergen${alergenObj.id}" name="allergen${alergenObj.id}" type="checkbox" value=${alergenObj.name}>
                 <label for="allergen${alergenObj.id}">
-                    <svg class="toggler-on" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                    <svg class="toggler-off" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
                         <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
                     </svg>
-                    <svg class="toggler-off" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                    <svg class="toggler-on" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
                         <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
                         <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
                     </svg>
                 </label>
             </div>
-            <span>${alergenObj.name}</span>`
+            <span class="allergenName">${alergenObj.name}</span>`
     // `<input type="checkbox" class="allergenCheck" name="allergen${alergenObj.id}" value=${alergenObj.name}>
     //         <label for="allergen${alergenObj.id}">${alergenObj.name}</label>`
   }
@@ -181,7 +183,11 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
 
   //function to create nav element
   function navBarComponent(){
-    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">0 ron</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button></nav></div>`
+    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">0 RON</span><span class="icon">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="30" height="30">
+    <path fill="none" d="M0 0h24v24H0z"></path>
+    <path fill="White" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+  </svg></span></button></nav></div>`
   }
 
   //function create HTML for nav

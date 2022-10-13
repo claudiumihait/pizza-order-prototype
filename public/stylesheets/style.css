@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,500;1,300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap');
 
 *{
     margin: 0;
@@ -25,12 +25,26 @@ hr{
 
 .navBarContainer{
     z-index: 100;
-    width: 1920px;
+    width: 100vw;
     position: fixed;
-    min-height: 90px;
-    background-color: red;
+    height: 10vh;
+    background-color: rgb(252, 0, 33);
     display: flex;
     flex-direction: column;
+    box-shadow: 1px 3px 3px 4px rgb(252, 0, 33);
+}
+nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    padding: 10px 25px;
+}
+
+nav h1 {
+    font-size: 2.5rem;
+    letter-spacing: 10px;
+    -webkit-text-stroke: .8px wheat;
 }
 
 .allAllergensContainer{
@@ -41,13 +55,14 @@ hr{
     width: 100%;
     font-family: monospace;
     font-size: 14px;  
+    margin-bottom: 4%
 }
 .container {
     position: absolute;
     left: 0;
-    top: 90px;
+    top: 8%;
     width: 100%;
-    height: 180px;
+    height: 190px;
     animation: animate 20s ease-in-out infinite;
     background-size: cover;
     background-position: center;
@@ -57,7 +72,7 @@ hr{
     left: 0;
     top: 0;
     width: 100%;
-    height: 180px;
+    height: 190px;
     background: rgb(0, 0, 0, 0.6);
     display: flex;
     justify-content: center;
@@ -79,8 +94,9 @@ hr{
     }
 }
 .toggler {
-    width: 92px;
-    margin: 40px auto;
+    /* width: 92px; */
+    /* margin: 40px auto; */
+    scale: .5;;
   }
 .toggler input {
     display: none;
@@ -98,7 +114,8 @@ hr{
 .toggler label::after {
     display: block;
     border-radius: 100%;
-    background-color: #d7062a;
+    /* background-color: #d7062a; */
+    background-color: #50ac5d;
     content: '';
     animation-name: toggler-size;
     animation-duration: 0.15s;
@@ -120,7 +137,8 @@ hr{
     left: 75%;
 }
 .toggler input:checked + label::after {
-    background-color: #50ac5d;
+    /* background-color: #50ac5d; */
+    background-color: #d7062a;
     animation-name: toggler-size2;
 }
 .toggler .toggler-on, .toggler .toggler-off {
@@ -132,6 +150,16 @@ hr{
     height: 0;
     opacity: 0;
 } 
+.outer span {
+    color: rgb(251, 233, 169);
+    font-size: 1.4em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.outer span::first-letter{
+    text-transform: uppercase;
+}
+
 .toggler .path {
     fill: none;
     stroke: #fefefe;
@@ -173,33 +201,35 @@ hr{
 .pizzaContainer{
     border-radius: 10px;
     width: 23%;
-    height: 480px;
+    min-height: 60vh;
     background-color: rgb(255, 233, 160);
     text-align: center;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 .pizzaImg{
     border-radius: 10px 10px 0px 0px;
     width: 100%;
-    height: 50%;
 }
 .pizzaName{
-    color: rgb(23, 70, 162);
-    font-size: 25px;
-    font-weight: bold;
+    color: rgb(252, 0, 33);
+    font-size: 19px;
     margin-top: 5px;
     margin-bottom: 10px;
-    -webkit-text-stroke: 0.5px navy;
-    text-shadow: 1px 2px 2px rgba(0, 0, 0, 0.5),
-                 1px 2px 2px rgba(0, 0, 0, 0.5);
+    -webkit-text-stroke: 1.2px rgb(252, 0, 33);
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    
 }
 .pizzaIngredients{
-    min-height: 23%;
     padding-right: 15px;
     padding-left: 15px;
     font-size: 18px;
-    font-weight: bold;
+    font-weight: 800;
+    font-family: 'Open Sans', sans-serif;
+    margin: 10% 0;
 }
 .buttonsContainer{
     display: flex;
@@ -217,6 +247,9 @@ hr{
     font-weight: bold;
 }
 
+.countDisplay{
+    font-family: 'Open Sans', sans-serif;
+}
 .addButton {
     font-family: inherit;
     font-size: 20px;
@@ -269,26 +302,28 @@ hr{
 }
    
 .increment {
+    scale: .7;
    --button_radius: 50%;
-   --button_color: rgb(110, 191, 139);
+   --button_color: #E9E9DF;
    --button_outline_color: #000000;
    font-size: 17px;
    font-weight: bold;
    border: none;
    border-radius: var(--button_radius);
    background: var(--button_outline_color);
-   margin-left: 20px;
+   margin-left: 10px;
 }
 .decrement {
+    scale: .7;
     --button_radius: 55%;
-    --button_color: rgb(110, 191, 139);
+    --button_color: #E9E9DF;
     --button_outline_color: #000000;
     font-size: 17px;
     font-weight: bold;
     border: none;
     border-radius: var(--button_radius);
     background: var(--button_outline_color);
-    margin-right: 20px;
+    margin-right: 10px;
  }
 .button_top {
    display: block;
@@ -303,7 +338,7 @@ hr{
 }
 button:hover .button_top {
    transform: translateY(-0.33em);
-   background-color: rgb(104, 211, 141);
+   background-color: #7F797F;
 }
 button:active .button_top {
    transform: translateY(0);
@@ -315,12 +350,10 @@ button:active .button_top {
     cursor: pointer;
     display: flex;
     align-items: center;
-    background: red;
-    border: none;
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-    background: #e62222;
-   }
+    background: black;
+}
 .orderButton span {
     transition: 200ms;
 }  
@@ -331,7 +364,7 @@ button:active .button_top {
 }
 .icon {
     position: absolute;
-    border-left: 1px solid #c41b1b;
+    border-left: 1px solid white;
     transform: translateX(110px);
     height: 40px;
     width: 40px;
@@ -344,7 +377,7 @@ button:active .button_top {
     fill: #eee;
 }
 .orderButton:hover {
-    background: #ff3636;
+    background: #272727;
 }
 .orderButton:hover .finalPrice {
     color: transparent;
