@@ -114,6 +114,21 @@ i {
     cursor: default;
 }
 
+a {
+    text-decoration: none;
+    color: #b3acad;
+    text-align: center;
+    margin-top: -20px;
+    letter-spacing: 2px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+a:hover {
+    color: rgba(0, 255, 255, 0.466);
+}
+
 /* FORM */
 #root {
     margin-left: auto;
