@@ -105,7 +105,6 @@ const loadEvent = (_) => {
   const postalCodeInput = document.getElementById("postal-code");
   const inputs = [nameInput, emailInput, cityInput, addrInput, postalCodeInput];
   const placeOrderBtn = document.getElementById("btn");
-  console.log(placeOrderBtn);
   //alert user valid/invalid inputs
   inputs.forEach((input, i) => {
     input.addEventListener("input", () => {
@@ -127,8 +126,24 @@ const loadEvent = (_) => {
     const next = event.target.nextSibling.nextSibling;
     if (event.target.id.includes("add-")) {
       changePricesOnAddOrRemove(prev, "add", total);
+      const pizzaName = event.target.parentElement.parentElement.innerText
+        .split("\n")[0]
+        .trim();
+      const pizzaID = Object.entries(sentBasket).filter(
+        (item) => item[1][0].toUpperCase() == pizzaName
+      )[0][0];
+
+      sentBasket[`${pizzaID}`][1] += 1;
     } else if (event.target.id.includes("remove")) {
       changePricesOnAddOrRemove(next, "remove", total);
+      const pizzaName = event.target.parentElement.parentElement.innerText
+        .split("\n")[0]
+        .trim();
+      const pizzaID = Object.entries(sentBasket).filter(
+        (item) => item[1][0].toUpperCase() == pizzaName
+      )[0][0];
+      sentBasket[`${pizzaID}`][1] -= 1;
+      sentBasket[`${pizzaID}`][1] == 0 ? delete sentBasket[`${id}`] : null;
       next.innerText < 1
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
@@ -188,7 +203,7 @@ function changePricesOnAddOrRemove(htmlElt, method, total) {
       parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
   }
 }
-function highlightValidInvalidInputs() {}
+
 function getTotalPrice() {
   let prices = [];
   const pricesElements = Array.from(document.querySelectorAll(".item-value"));
