@@ -114,7 +114,7 @@ i {
     cursor: default;
 }
 
-a {
+#go-back {
     text-decoration: none;
     color: #b3acad;
     text-align: center;
@@ -125,7 +125,7 @@ a {
     cursor: pointer;
 }
 
-a:hover {
+#go-back:hover {
     color: rgba(0, 255, 255, 0.466);
 }
 

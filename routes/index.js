@@ -62,6 +62,10 @@ router
   })
   .get("/order-submitted", (req, res) => {
     res.render("order-submitted");
-  });
+  })
+  .put("/basket", (req, res) => {
+    basket = req.body;
+  })
+  ;
 
 module.exports = router;
