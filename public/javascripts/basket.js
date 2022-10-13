@@ -97,6 +97,23 @@ const loadEvent = (_) => {
 
   rootElement.insertAdjacentHTML("beforeend", formComponent);
 
+  const nameInput = document.getElementById("fname");
+  const emailInput = document.getElementById("email");
+  const cityInput = document.getElementById("city");
+  const addrInput = document.getElementById("address");
+  const postalCodeInput = document.getElementById("postal-code");
+
+  //alert user valid/invalid inputs
+  [nameInput, emailInput, cityInput, addrInput, postalCodeInput].forEach(
+    (input, i) => {
+      input.addEventListener("input", () => {
+        validations[i](input.value)
+          ? (input.style.border = "2px solid #1ca57d")
+          : (input.style.border = "2px solid #b5393d");
+      });
+    }
+  );
+
   const clickEvent = (event) => {
     //handle add and remove on click
     const prev = event.target.previousSibling.previousSibling;
@@ -110,37 +127,6 @@ const loadEvent = (_) => {
         : true;
     } else if (event.target.id == "btn") {
       event.preventDefault();
-      const nameInput = document.getElementById("fname");
-      const emailInput = document.getElementById("email");
-      const cityInput = document.getElementById("city");
-      const addrInput = document.getElementById("address");
-      const postalCodeInput = document.getElementById("postal-code");
-
-      //alert user of valid/not valid inputs
-      isNameValid(nameInput.value)
-        ? (nameInput.style.border = "3px solid #00ff00")
-        : (nameInput.style.border = "3px solid red");
-
-      isEmailValid(emailInput.value)
-        ? (emailInput.style.border = "2px solid #00ff00")
-        : (emailInput.style.border = "2px solid red");
-
-      isEmailValid(emailInput.value)
-        ? (emailInput.style.border = "2px solid #00ff00")
-        : (emailInput.style.border = "2px solid red");
-
-      isCityValid(cityInput.value)
-        ? (cityInput.style.border = "2px solid #00ff00")
-        : (cityInput.style.border = "2px solid red");
-
-      isAddressValid(addrInput.value)
-        ? (addrInput.style.border = "2px solid #00ff00")
-        : (addrInput.style.border = "2px solid red");
-
-      isPostalCodeValid(postalCodeInput.value)
-        ? (postalCodeInput.style.border = "2px solid #00ff00")
-        : (postalCodeInput.style.border = "2px solid red");
-
       //if all valid, send order
       if (
         isNameValid(nameInput.value) &&
@@ -158,8 +144,6 @@ const loadEvent = (_) => {
           postalCodeInput
         );
         postOrder("/api/orders", orderSchema);
-      } else {
-        console.log("not valid");
       }
     }
     console.log(event.target.id);
@@ -191,7 +175,7 @@ function changePricesOnAddOrRemove(htmlElt, method, total) {
       parseInt(total.innerHTML.split(" ")[0]) - itemPrice + " Ron";
   }
 }
-
+function highlightValidInvalidInputs() {}
 function getTotalPrice() {
   let prices = [];
   const pricesElements = Array.from(document.querySelectorAll(".item-value"));
@@ -233,22 +217,27 @@ function updateSchema(name, email, city, address, postalCode) {
 }
 
 //-- VALIDATIONS --
-function isNameValid(input) {
-  return /^[a-z -]+$/i.test(input);
-}
 
-function isEmailValid(input) {
-  return /^((\w)+(\.)?(\w)+)(@){1}([a-z])+(\.){1}([a-zA-Z]){2,3}$/i.test(input);
-}
+const validations = [
+  function isNameValid(input) {
+    return /^[a-z -]{3,}$/i.test(input);
+  },
 
-function isCityValid(input) {
-  return /^[a-z]+([ -][a-z]+)*$/i.test(input);
-}
+  function isEmailValid(input) {
+    return /^((\w)+(\.)?(\w)+)(@){1}([a-z])+(\.){1}([a-zA-Z]){2,3}$/i.test(
+      input
+    );
+  },
 
-function isAddressValid(input) {
-  return /[a-z0-9'\.\-\s\,]/i.test(input);
-}
+  function isCityValid(input) {
+    return /^[a-z]{2,}([ -][a-z]+)*$/i.test(input);
+  },
 
-function isPostalCodeValid(input) {
-  return /^\d{6}$/.test(input);
-}
+  function isAddressValid(input) {
+    return /^([a-z0-9'\.\-\s\,]){6,}$/i.test(input);
+  },
+
+  function isPostalCodeValid(input) {
+    return /^\d{6}$/.test(input);
+  },
+];
