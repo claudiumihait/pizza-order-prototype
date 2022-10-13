@@ -104,6 +104,8 @@ const loadEvent = (_) => {
   const addrInput = document.getElementById("address");
   const postalCodeInput = document.getElementById("postal-code");
   const inputs = [nameInput, emailInput, cityInput, addrInput, postalCodeInput];
+  const placeOrderBtn = document.getElementById("btn");
+  console.log(placeOrderBtn);
   //alert user valid/invalid inputs
   inputs.forEach((input, i) => {
     input.addEventListener("input", () => {
@@ -111,19 +113,11 @@ const loadEvent = (_) => {
         ? (input.style.border = "2px solid #1ca57d")
         : (input.style.border = "2px solid #b5393d");
       //enable button on valid inputs
-      if (
-        inputs.every(
-          (input) => input.style.border == "2px solid rgb(28, 165, 125)"
-        )
-      ) {
-        document.getElementById("btn").classList.add("valid");
-        document.getElementById("btn").removeAttribute("disabled");
-        document.getElementById("btn").classList.remove("invalid");
-      } else {
-        document.getElementById("btn").classList.add("invalid");
-        document.getElementById("btn").setAttribute("disabled");
-        document.getElementById("btn").classList.remove("valid");
-      }
+      inputs.every(
+        (input) => input.style.border == "2px solid rgb(28, 165, 125)"
+      )
+        ? enableOrderButton(placeOrderBtn)
+        : disableOrderButton(placeOrderBtn);
     });
   });
 
@@ -139,15 +133,9 @@ const loadEvent = (_) => {
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
     } else if (event.target.id == "btn") {
-      //if all valid, send order
       event.preventDefault();
-      if (
-        validations[0](nameInput.value) &&
-        validations[1](emailInput.value) &&
-        validations[2](cityInput.value) &&
-        validations[3](addrInput.value) &&
-        validations[4](postalCodeInput.value)
-      ) {
+      //if all valid, send order
+      if (inputs.every((input, i) => validations[i](input.value))) {
         updateSchema(
           nameInput.value.trim(),
           emailInput.value.trim(),
@@ -166,6 +154,18 @@ const loadEvent = (_) => {
 };
 
 window.addEventListener("DOMContentLoaded", loadEvent);
+
+function enableOrderButton(button) {
+  button.classList.add("valid");
+  button.removeAttribute("disabled");
+  button.classList.remove("invalid");
+}
+
+function disableOrderButton(button) {
+  button.classList.add("invalid");
+  button.setAttribute("disabled", "");
+  button.classList.remove("valid");
+}
 
 function changePricesOnAddOrRemove(htmlElt, method, total) {
   const priceElt =
