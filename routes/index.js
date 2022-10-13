@@ -42,7 +42,6 @@ router
       }
     });
     res.body = JSON.stringify(basket);
-    console.log(basket);
   })
   .get("/api/orders", async (req, res) => {
     const response = await tools.readFile(ordersJsonPath);
