@@ -35,7 +35,7 @@ const formComponent = `
 
 <label for="city">Address:</label>
 <input type="text" id="city" name="city" placeholder="City..." required></input><br>
-<textarea id="address" name="address" placeholder="Street, street number, ..." required></textarea><br>
+<textarea id="address" name="address" placeholder="Street, street number, flat, ..." required></textarea><br>
 <input type="text" id="postal-code" name="postal-code" placeholder="Postal Code..." required></input><br>
 <button id="btn" class="invalid" disabled>Place Order</button>
 </form>
@@ -43,6 +43,7 @@ const formComponent = `
 
 const basketCardComponent = `
 <div class="basket-container">
+<a href="http://127.0.0.1:3000/pizzas/list">GO BACK</a>
 <div class = "basket-header">
 <i class="bi bi-cart"></i>
 <p> Order summary:  </p>
