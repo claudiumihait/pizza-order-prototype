@@ -353,6 +353,8 @@ button:active .button_top {
     border-radius: 5px;
     box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
     background: black;
+    margin-right: 20px;
+    margin-top: 5px;
 }
 .orderButton span {
     transition: 200ms;
@@ -377,7 +379,7 @@ button:active .button_top {
     fill: #eee;
 }
 .orderButton:hover {
-    background: #272727;
+    background: #181818;
 }
 .orderButton:hover .finalPrice {
     color: transparent;

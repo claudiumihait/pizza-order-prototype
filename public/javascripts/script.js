@@ -2,7 +2,7 @@
 //import {data} from '../pizzas.js';
 Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>Promise.all(responses.map(response=>response.json()))).then(objects=>{
   //variable to check if addButton was pressed and make sum all added pizzas
-  var sumPrice
+  var sumPrice;
   if(Object.keys(sentBasket).length === 0){
      sumPrice = 0;
   }else{
@@ -10,6 +10,8 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
 
   }
   
+  //variable to store session basket for one final post
+  var currentBasket = [];
 
   //list of all pizzas from pizzas.json
   const allPizzasList = objects[0];
@@ -18,18 +20,13 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
   const allAllergensList = objects[1];
 
   //function to add pizzas to order
-  async function addToBasket(pizzaId,amount,price,name){
+  async function addToBasket(currentBasket){
     fetch(`http://127.0.0.1:3000/basket`,{
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          id:pizzaId,
-          amount:amount,
-          price:price,
-          name:name
-        })
+        body: JSON.stringify(currentBasket)
     })
   }
 
@@ -128,8 +125,8 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         let amount = parseInt(numberNode.textContent);
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         sumPrice += parseInt(numberNode.textContent)*price;
-        document.querySelector(".finalPrice").textContent = `${sumPrice} ron`
-        addToBasket(pizzaId,amount,price,pizzaName);
+        document.querySelector(".finalPrice").textContent = `${sumPrice} ron`;
+        currentBasket.push({id:pizzaId, amount:amount, price:price, name:pizzaName});
         document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price} RON`;
         numberNode.textContent = "1";
       });
@@ -207,7 +204,8 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
       if(sumPrice == 0){
         window.location.assign("../empty-basket");
       }else{
-        window.location.assign("../basket")
+        window.location.assign("../basket");
+        addToBasket(currentBasket);
       }
     });
   }
