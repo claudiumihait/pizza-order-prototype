@@ -1,10 +1,13 @@
 //import all data
 //import {data} from '../pizzas.js';
 Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>Promise.all(responses.map(response=>response.json()))).then(objects=>{
-  //list of all pizzas from pizzas.js
+  //variable to check if addButton was pressed and make sum all added pizzas
+  var sumPrice = 0;
+
+  //list of all pizzas from pizzas.json
   const allPizzasList = objects[0];
 
-  //list of all allergens from pizzas.js
+  //list of all allergens from pizzas.json
   const allAllergensList = objects[1];
 
   //function to add pizzas to order
@@ -51,20 +54,25 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         <p class="pizzaIngredients">${pizzaObj.ingredients.join(", ")}.</p>
         <div class="buttonsContainer">
         <button class="addButton">
-        <div class="svg-wrapper-1">
-          <div class="svg-wrapper">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-              <path fill="none" d="M0 0h24v24H0z"></path>
-              <path fill="currentColor" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-            </svg>
+          <div class="svg-wrapper-1">
+            <div class="svg-wrapper">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" width="24" height="24">
+                <path fill="none" d="M0 0h24v24H0z"></path>
+                <path fill="currentColor" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+              </svg>
+            </div>
           </div>
-        </div>
-        <span>Add to basket</span>
-      </button>
+          <span>Add to basket</span>
+          <span class="pizzaPrice"><i class="fa-solid fa-wallet"></i> ${pizzaObj.price} ron</span>
+        </button>
           <div class="counterContainer">
-            <button class="increment">+</button>  
+            <button class="increment">
+              <span class="button_top">+</span>
+            </button> 
             <h2 class="countDisplay">1</h2>
-            <button class="decrement">-</button>
+            <button class="decrement">
+              <span class="button_top">-</span>
+            </button> 
           </div>
         </div>
       </div>`
@@ -84,15 +92,21 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
     document.querySelectorAll(".increment").forEach((node,index)=>{
       node.addEventListener('click',(event)=>{
         let numberNode = document.querySelectorAll(".countDisplay")[index];
+        let pizzaName = document.querySelectorAll(".pizzaName")[index].textContent;
+        let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         numberNode.textContent = String(parseInt(numberNode.textContent)+1);
+        document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price*parseInt(numberNode.textContent)} ron`;
       });
     });
     //adding functionality to decrement buttons
     document.querySelectorAll(".decrement").forEach((node,index)=>{
       node.addEventListener('click',(event)=>{
         let numberNode = document.querySelectorAll(".countDisplay")[index];
+        let pizzaName = document.querySelectorAll(".pizzaName")[index].textContent;
+        let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
         if(parseInt(numberNode.textContent) > 1){
           numberNode.textContent = String(parseInt(numberNode.textContent)-1);
+          document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price*parseInt(numberNode.textContent)} ron`;
         }
       });
     });
@@ -104,7 +118,10 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
         let pizzaId = allPizzasList.filter(elem => elem.name === pizzaName)[0].id;
         let amount = parseInt(numberNode.textContent);
         let price = allPizzasList.filter(elem => elem.name === pizzaName)[0].price;
+        sumPrice += parseInt(numberNode.textContent)*price;
+        document.querySelector(".finalPrice").textContent = `${sumPrice} ron`
         addToBasket(pizzaId,amount,price,pizzaName);
+        document.querySelectorAll(".pizzaPrice")[index].innerHTML = `<i class="fa-solid fa-wallet"></i> ${price} ron`;
         numberNode.textContent = "1";
       });
     });
@@ -117,15 +134,32 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
 
   //function for single allergen component
   function allergenHTMLcomponent(alergenObj){
-    return `<input type="checkbox" class="allergenCheck" name="allergen${alergenObj.id}" value=${alergenObj.name}>
-            <label for="allergen${alergenObj.id}">${alergenObj.name}</label>`
+    return `<div class="toggler">
+                <input class="allergenCheck" name="allergen${alergenObj.id}" type="checkbox" value=${alergenObj.name}>
+                <label for="allergen${alergenObj.id}">
+                    <svg class="toggler-on" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                        <polyline class="path check" points="100.2,40.2 51.5,88.8 29.8,67.5"></polyline>
+                    </svg>
+                    <svg class="toggler-off" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                        <line class="path line" x1="34.4" y1="34.4" x2="95.8" y2="95.8"></line>
+                        <line class="path line" x1="95.8" y1="34.4" x2="34.4" y2="95.8"></line>
+                    </svg>
+                </label>
+            </div>`
+    // `<input type="checkbox" class="allergenCheck" name="allergen${alergenObj.id}" value=${alergenObj.name}>
+    //         <label for="allergen${alergenObj.id}">${alergenObj.name}</label>`
   }
 
   //<video class="bgVideo" autoplay muted loop><source src="https://youtu.be/2ss1BHH-leI" type="video/mp4" /></video>
   //function for putting togheter allergen components
   function allAllergenComponent(allergenList){
-    return `<div class="allAllergensContainer">${allergenList.map(allergen => allergenHTMLcomponent(allergen)).join("")}
-    </div>`;
+    return `<div class="allAllergensContainer">
+              <div class="container">
+                <div class="outer">
+                    <span class="allergenTitle">Filter by allergens: </span>${allergenList.map(allergen => allergenHTMLcomponent(allergen)).join("")}
+                </div>
+              </div>
+            </div>`;
   }
 
   //function create HTML for pizzas
@@ -137,7 +171,7 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
     document.querySelectorAll(".allergenCheck").forEach((node)=>{
       node.addEventListener("click",(event)=>{
         let idOfAllergensChecked = Array.from(document.querySelectorAll(".allergenCheck")).filter(node => node.checked === true).map(node => parseInt(node.name.split("allergen")[1]));
-        let filteredPizzas = allPizzasList.filter(pizza => idOfAllergensChecked.every(elem => pizza.allergens.includes(elem)));
+        let filteredPizzas = allPizzasList.filter(pizza => idOfAllergensChecked.every(elem => !pizza.allergens.includes(elem)));
         clearPizzasDivs();
         createPizzasHTML(filteredPizzas);
       });
@@ -146,17 +180,31 @@ Promise.all([fetch(`../api/pizzas`),fetch(`../api/allergens`)]).then(responses=>
 
   //function to create nav element
   function navBarComponent(){
-    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><div class="orderContainer"><a href="../basket"><i class="fa-sharp fa-solid fa-basket-shopping"></i></a></div></nav></div>`
+    return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">0 ron</span><span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M24 20.188l-8.315-8.209 8.2-8.282-3.697-3.697-8.212 8.318-8.31-8.203-3.666 3.666 8.321 8.24-8.206 8.313 3.666 3.666 8.237-8.318 8.285 8.203z"></path></svg></span></button></nav></div>`
   }
 
-  
+  //function create HTML for nav
+  function createNavHTML(){
+    const rootElement = document.getElementById("root");
+    //inserting navbar 
+    rootElement.insertAdjacentHTML("afterbegin", navBarComponent());
+    //adding functionality to basket button
+    document.querySelector(".orderButton").addEventListener("click", (event)=>{
+      if(sumPrice == 0){
+        window.location.assign("../empty-basket");
+      }else{
+        window.location.assign("../basket")
+      }
+    });
+  }
+
   function loadEvent(){
     // the HTML elements with ID are available as global variables with the ID (eg. root) but it is better if you 
     const rootElement = document.getElementById("root");
     //inserting HTML for allergen check
     createAllergensHTML(allAllergensList);
-    //inserting nav bar component
-    rootElement.insertAdjacentHTML("afterbegin", navBarComponent());
+    //inserting HTML for navbar
+    createNavHTML();
     //inserting HTML for pizzas
     createPizzasHTML(allPizzasList);
   }
