@@ -43,7 +43,7 @@ const formComponent = `
 
 const basketCardComponent = `
 <div class="basket-container">
-<a href="http://127.0.0.1:3000/pizzas/list">GO BACK</a>
+<div id="go-back">GO BACK</div>
 <div class = "basket-header">
 <i class="bi bi-cart"></i>
 <p> Order summary:  </p>
@@ -114,7 +114,7 @@ const loadEvent = (_) => {
       //enable button on valid inputs
       inputs.every(
         (input) => input.style.border == "2px solid rgb(28, 165, 125)"
-      )
+      ) && Object.keys(sentBasket).length > 0
         ? enableOrderButton(placeOrderBtn)
         : disableOrderButton(placeOrderBtn);
     });
@@ -142,11 +142,18 @@ const loadEvent = (_) => {
       const pizzaID = Object.entries(sentBasket).filter(
         (item) => item[1][0].toUpperCase() == pizzaName
       )[0][0];
-      sentBasket[`${pizzaID}`][1] -= 1;
-      sentBasket[`${pizzaID}`][1] == 0 ? delete sentBasket[`${id}`] : null;
+
+      sentBasket[`${pizzaID}`][1] - 1 == 0
+        ? delete sentBasket[`${pizzaID}`]
+        : (sentBasket[`${pizzaID}`][1] -= 1);
+
       next.innerText < 1
         ? event.target.parentElement.parentElement.parentElement.remove()
         : true;
+
+      Object.keys(sentBasket).length == 0
+        ? disableOrderButton(placeOrderBtn)
+        : null;
     } else if (event.target.id == "btn") {
       event.preventDefault();
       //if all valid, send order
@@ -161,6 +168,9 @@ const loadEvent = (_) => {
         postOrder("/api/orders", orderSchema);
         window.location.replace("http://127.0.0.1:3000/order-submitted");
       }
+    } else if (event.target.id == "go-back") {
+      updateBasket("/basket", sentBasket);
+      window.location.replace("http://127.0.0.1:3000/pizzas/list");
     }
     console.log(event.target.id);
     console.log(event.target);
@@ -217,6 +227,17 @@ function getTotalPrice() {
 async function postOrder(url = "", data = {}) {
   const response = await fetch(url, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response.json();
+}
+
+async function updateBasket(url = "", data = {}) {
+  const response = await fetch(url, {
+    method: "PUT",
     headers: {
       "Content-Type": "application/json",
     },
