@@ -119,7 +119,7 @@ Promise.all([fetch(`../api/pizzas`), fetch(`../api/allergens`)])
             index
           ].innerHTML = `<i class="fa-solid fa-wallet"></i> ${
             price * parseInt(numberNode.textContent)
-          } ron`;
+          } RON`;
         });
       });
       //adding functionality to decrement buttons
@@ -155,7 +155,7 @@ Promise.all([fetch(`../api/pizzas`), fetch(`../api/allergens`)])
           let price = allPizzasList.filter((elem) => elem.name === pizzaName)[0]
             .price;
           sumPrice += parseInt(numberNode.textContent) * price;
-          document.querySelector(".finalPrice").textContent = `${sumPrice} ron`;
+          document.querySelector(".finalPrice").textContent = `${sumPrice} RON`;
           currentBasket.push({
             id: pizzaId,
             amount: amount,
@@ -240,9 +240,9 @@ Promise.all([fetch(`../api/pizzas`), fetch(`../api/allergens`)])
       return `<div class="navBarContainer"><nav><h1>Cold <i class="fa-solid fa-pizza-slice"></i> Pizzas</h1><button class="orderButton"><span class="finalPrice">${parseInt(
         sumPrice
       )} RON</span><span class="icon">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="30" height="30">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15" width="80" height="80">
     <path fill="none" d="M0 0h24v24H0z"></path>
-    <path fill="White" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+    <path fill="Red" d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
   </svg></span></button></nav></div>`;
     }
 
