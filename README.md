@@ -4,6 +4,8 @@
 
 ### Description ###
 
+_Note: This application was created as a learning project to practice JavaScript development skills and is not intended for actual commercial use._
+
 Cold Pizzas is a simple web mock-app designed to facilitate the process of ordering pizzas. With this app, users can easily browse and filter pizzas based on allergens, add their desired pizzas to the basket, make edits to the selected pizzas in the basket, and ultimately place their orders.
 
 ### Installation ###
@@ -36,35 +38,33 @@ Follow these instructions to effectively use the Pizza Ordering App:
 6. Complete the required credentials, such as your name, address, and other necessary information, in the credentials form below the basket section.
 7. Once all the necessary information is valid and filled, the `Place Order` button will become enabled. Click on the `Place Order` button to finalize your order.
 
-Please note that the app validates the entered information, ensuring that all necessary fields are filled correctly before allowing the order placement.
-
 
 ### Screenshots ###
 
 
 #### Home Page ####
 
-![Home Page](https://imgur.com/a/BXJDJti)
+![Home Page](https://i.imgur.com/oCh2U3z.png)
 
 #### Basket (Order Summary + Credentials Form) ####
 
-![Basket (Order Summary + Credentials Form)](https://imgur.com/a/3IQT3XU)
+![Basket (Order Summary + Credentials Form)](https://i.imgur.com/dNvNjuh.png)
 
 #### Form Validity - 1 ####
 
-![Form Validity - 1](https://imgur.com/a/9kgiD3a)
+![Form Validity - 1](https://i.imgur.com/55wh0W4.png)
 
 #### Form Validity - 2 ####
 
-![Form Validity - 2](https://imgur.com/a/SFaULPw)
+![Form Validity - 2](https://i.imgur.com/I1CW52s.png)
 
 #### Placed order ####
 
-![Placed order](https://imgur.com/a/n1noVdf)
+![Placed order](https://i.imgur.com/VKELp88.png)
 
 #### Empty Basket ####
 
-![Empty basket](https://imgur.com/a/kDIBi8T)
+![Empty basket](https://i.imgur.com/eXSGULU_d.webp?maxwidth=760&fidelity=grand)
 
 
 ### Technologies ###
