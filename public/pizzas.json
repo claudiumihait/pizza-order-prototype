@@ -1,174 +1,304 @@
 {
-    "pizzas":[
-        {
-            "id": 1,
-            "name": "Capricciosa",
-            "ingredients": [ "Tomato Sauce", "Mozzarella", "Ham", "Fresh Tomato", "Mushrooms"],
-            "img": {
-                "large":"/images/capricciosa-large.png",
-                "medium":"/images/capricciosa-medium.png"
-            },
-            "quantity": 703,
-            "price": 40,
-            "allergens": [1,3]
-        },
-        {
-            "id": 2,
-            "name": "Quattro Stagioni",
-            "ingredients": [ "Tomato Sauce", "Mozzarella", "Ham", "Chorizo", "Green Peppers", "Mushrooms"],
-            "img": {
-                "large":"/images/quattro-stagioni-large.png",
-                "medium":"/images/quattro-stagioni-medium.png"
-            },
-            "quantity": 713,
-            "price": 44,
-            "allergens": [1,3,4]
-        },
-        {
-            "id": 3,
-            "name": "Margherita",
-            "ingredients": [ "Tomato Sauce", "Mozzarella"],
-            "img": {
-                "large":"/images/margherita-large.png",
-                "medium":"/images/margherita-medium.png"
-            },
-            "quantity": 555,
-            "price": 29,
-            "allergens": [1,3]
-        },
-        {
-            "id": 4,
-            "name": "Carnivora",
-            "ingredients": [ "Tomato Sauce", "Mozzarella", "Sausage", "Spicy Beef", "Pepperoni", "Ham"],
-            "img": {
-                "large":"/images/carnivora-large.png",
-                "medium":"/images/carnivora-medium.png"
-            },
-            "quantity": 715,
-            "price": 47,
-            "allergens": [1,2,6,4,3]
-        },
-        {
-            "id": 5,
-            "name": "Vegetariana",
-            "ingredients": [ "Tomato Sauce", "Mozzarella", "Onions", "Mushrooms", "Sweet  Corn", "Fresh Tomato", "Green Peppers", "Black Olives"],
-            "img": {
-                "large":"/images/vegetariana-large.png",
-                "medium":"/images/vegetariana-medium.png"
-            },
-            "quantity": 775,
-            "price": 38,
-            "allergens": [1,3]
-        },
-        {
-            "id": 6,
-            "name": "Quattro Formaggi",
-            "ingredients": [ "Cream Sauce", "Mozzarella", "Telemea Cheese", "Cheddar", "Parmezan"],
-            "img": {
-                "large":"/images/quattro-formagi-large.png",
-                "medium":"/images/quattro-formagi-medium.png"
-            },
-            "quantity": 670,
-            "price": 44,
-            "allergens": [1,3]
-        },
-        {
-            "id": 7,
-            "name": "Mexicana",
-            "ingredients": [ "Tomato Sauce", "Mozzarella", "Bacon", "Chorizo", "Ham", "Jalapeno Peppers"],
-            "img": {
-                "large":"/images/mexicana-large.png",
-                "medium":"/images/mexicana-medium.png"
-            },
-            "quantity": 713,
-            "price": 44,
-            "allergens": [1,3,4]
-        },
-        {
-            "id": 8,
-            "name": "Carbonara",
-            "ingredients": [ "Cream Sauce", "Mozzarella", "Blue Cheese", "Parmezan", "Bacon"],
-            "img": {
-                "large":"/images/carbonara-large.png",
-                "medium":"/images/carbonara-medium.png"
-            },
-            "quantity": 690,
-            "price": 47,
-            "allergens": [1,3,4]
-        },
-        {
-            "id": 9,
-            "name": "Pepperoni",
-            "ingredients": [ "Tomato Sauce", "Extra Mozzarella", "Extra Pepperoni"],
-            "img": {
-                "large":"/images/pepperoni-large.png",
-                "medium":"/images/pepperoni-medium.png"
-            },
-            "quantity": 660,
-            "price": 44,
-            "allergens": [1,2,6,4,3]
-        },
-        {
-            "id": 10,
-            "name": "Pollo",
-            "ingredients": [ "Cream Sauce", "Mozzarella", "Blue Cheese", "Fresh Tomato", "Chicken", "Mushrooms"],
-            "img": {
-                "large":"/images/pollo-large.png",
-                "medium":"/images/pollo-medium.png"
-            },
-            "quantity": 750,
-            "price": 47,
-            "allergens": [1,3,4]
-        },
-        {
-            "id": 11,
-            "name": "Rustica",
-            "ingredients": [ "Cream Sauce", "Mozzarella", "Telemea Cheese", "Fresh Tomato", "Bacon", "Onion"],
-            "img": {
-                "large":"/images/rustica-large.png",
-                "medium":"/images/rustica-medium.png"
-            },
-            "quantity": 720,
-            "price": 40,
-            "allergens": [1,2,3]
-        },
-        {
-            "id": 12,
-            "name": "Extravagantzza",
-            "ingredients": [ "Tomato Sauce", "Mozzarella", "Sausage", "Pepperoni", "Ham", "Mushrooms", "Sweet Corn", "Onions", "Green Peppers", "Black Olives"],
-            "img": {
-                "large":"/images/extravagantzza-large.png",
-                "medium":"/images/extravagantzza-medium.png"
-            },
-            "quantity": 795,
-            "price": 48,
-            "allergens": [1,2,3,4,6]
-        }
-    ],
-    "allergens":[
-        {
-            "id": 1,
-            "name": "gluten"
-        },
-        {
-            "id": 2,
-            "name": "eggs"
-        },
-        {
-            "id": 3,
-            "name": "lactose"
-        },
-        {
-            "id": 4,
-            "name": "soy"
-        },
-        {
-            "id": 5,
-            "name": "crustaceans"
-        },
-        {
-            "id": 6,
-            "name": "peanuts"
-        }
-    ]
+  "pizzas": [
+    {
+      "id": 1,
+      "name": "Capricciosa",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella",
+        "Ham",
+        "Fresh Tomato",
+        "Mushrooms"
+      ],
+      "img": {
+        "large": "/images/capricciosa-large.png",
+        "medium": "/images/capricciosa-medium.png"
+      },
+      "quantity": 703,
+      "price": 40,
+      "allergens": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Quattro Stagioni",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella",
+        "Ham",
+        "Chorizo",
+        "Green Peppers",
+        "Mushrooms"
+      ],
+      "img": {
+        "large": "/images/quattro-stagioni-large.png",
+        "medium": "/images/quattro-stagioni-medium.png"
+      },
+      "quantity": 713,
+      "price": 44,
+      "allergens": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Margherita",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella"
+      ],
+      "img": {
+        "large": "/images/margherita-large.png",
+        "medium": "/images/margherita-medium.png"
+      },
+      "quantity": 555,
+      "price": 29,
+      "allergens": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 4,
+      "name": "Carnivora",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella",
+        "Sausage",
+        "Spicy Beef",
+        "Pepperoni",
+        "Ham"
+      ],
+      "img": {
+        "large": "/images/carnivora-large.png",
+        "medium": "/images/carnivora-medium.png"
+      },
+      "quantity": 715,
+      "price": 47,
+      "allergens": [
+        1,
+        2,
+        6,
+        4,
+        3
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Vegetariana",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella",
+        "Onions",
+        "Mushrooms",
+        "Sweet  Corn",
+        "Fresh Tomato",
+        "Green Peppers",
+        "Black Olives"
+      ],
+      "img": {
+        "large": "/images/vegetariana-large.png",
+        "medium": "/images/vegetariana-medium.png"
+      },
+      "quantity": 775,
+      "price": 38,
+      "allergens": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 6,
+      "name": "Quattro Formaggi",
+      "ingredients": [
+        "Cream Sauce",
+        "Mozzarella",
+        "Telemea Cheese",
+        "Cheddar",
+        "Parmezan"
+      ],
+      "img": {
+        "large": "/images/quattro-formagi-large.png",
+        "medium": "/images/quattro-formagi-medium.png"
+      },
+      "quantity": 670,
+      "price": 44,
+      "allergens": [
+        1,
+        3
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Mexicana",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella",
+        "Bacon",
+        "Chorizo",
+        "Ham",
+        "Jalapeno Peppers"
+      ],
+      "img": {
+        "large": "/images/mexicana-large.png",
+        "medium": "/images/mexicana-medium.png"
+      },
+      "quantity": 713,
+      "price": 44,
+      "allergens": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Carbonara",
+      "ingredients": [
+        "Cream Sauce",
+        "Mozzarella",
+        "Blue Cheese",
+        "Parmezan",
+        "Bacon"
+      ],
+      "img": {
+        "large": "/images/carbonara-large.png",
+        "medium": "/images/carbonara-medium.png"
+      },
+      "quantity": 690,
+      "price": 47,
+      "allergens": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Pepperoni",
+      "ingredients": [
+        "Tomato Sauce",
+        "Extra Mozzarella",
+        "Extra Pepperoni"
+      ],
+      "img": {
+        "large": "/images/pepperoni-large.png",
+        "medium": "/images/pepperoni-medium.png"
+      },
+      "quantity": 660,
+      "price": 44,
+      "allergens": [
+        1,
+        2,
+        6,
+        4,
+        3
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Pollo",
+      "ingredients": [
+        "Cream Sauce",
+        "Mozzarella",
+        "Blue Cheese",
+        "Fresh Tomato",
+        "Chicken",
+        "Mushrooms"
+      ],
+      "img": {
+        "large": "/images/pollo-large.png",
+        "medium": "/images/pollo-medium.png"
+      },
+      "quantity": 750,
+      "price": 47,
+      "allergens": [
+        1,
+        3,
+        4
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Rustica",
+      "ingredients": [
+        "Cream Sauce",
+        "Mozzarella",
+        "Telemea Cheese",
+        "Fresh Tomato",
+        "Bacon",
+        "Onion"
+      ],
+      "img": {
+        "large": "/images/rustica-large.png",
+        "medium": "/images/rustica-medium.png"
+      },
+      "quantity": 720,
+      "price": 40,
+      "allergens": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Extravagantzza",
+      "ingredients": [
+        "Tomato Sauce",
+        "Mozzarella",
+        "Sausage",
+        "Pepperoni",
+        "Ham",
+        "Mushrooms",
+        "Sweet Corn",
+        "Onions",
+        "Green Peppers",
+        "Black Olives"
+      ],
+      "img": {
+        "large": "/images/extravagantzza-large.png",
+        "medium": "/images/extravagantzza-medium.png"
+      },
+      "quantity": 795,
+      "price": 48,
+      "allergens": [
+        1,
+        2,
+        3,
+        4,
+        6
+      ]
+    }
+  ],
+  "allergens": [
+    {
+      "id": 1,
+      "name": "gluten"
+    },
+    {
+      "id": 2,
+      "name": "eggs"
+    },
+    {
+      "id": 3,
+      "name": "lactose"
+    },
+    {
+      "id": 4,
+      "name": "soy"
+    },
+    {
+      "id": 5,
+      "name": "crustaceans"
+    },
+    {
+      "id": 6,
+      "name": "peanuts"
+    }
+  ]
 }
