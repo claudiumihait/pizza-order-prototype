@@ -1,13 +1,13 @@
 /* MY COLORS: GREEN : #1ca57d, WHITE: #ebeeec, RED :#b5393d, BLACK: #212127 */
 
-*{
+* {
     font-family: Verdana, sans-serif;
-    padding: 12px ;
+    padding: 12px;
     box-sizing: border-box;
 }
 
 body {
-    background: url("../images/pizza-basket.png") no-repeat center center fixed; 
+    background: url("../images/pizza-basket.png") no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
@@ -27,13 +27,14 @@ body {
     flex-direction: column;
     width: auto;
 }
+
 .basket-header {
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 12px;
     height: 50px;
-    font-size:20px;
+    font-size: 20px;
     background-color: #b5393d;
 }
 
@@ -41,7 +42,7 @@ body {
     text-align: center;
     font-weight: 600;
     letter-spacing: 4px;
-} 
+}
 
 .item, #total {
     display: flex;
@@ -52,7 +53,7 @@ body {
 .item {
     letter-spacing: 2px;
     font-weight: 600;
-    align-items: center ;
+    align-items: center;
 }
 
 #total {
@@ -64,11 +65,12 @@ body {
 .qty-container {
     display: inline-flex;
 }
+
 #total {
-    display:flex;
+    display: flex;
 }
 
-.qty{
+.qty {
     margin-right: -15px;
     margin-left: -15px;
 }
@@ -145,7 +147,7 @@ i {
 
 input, textarea {
     border-radius: 18px;
-    background-color : #beb6b6; 
+    background-color: #beb6b6;
     outline: none;
 }
 
