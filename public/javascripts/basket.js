@@ -250,8 +250,8 @@ function updateSchema(name, email, city, address, postalCode) {
   let date = new Date();
   //base details
   orderSchema.date.year = date.getFullYear();
-  orderSchema.date.month = date.getMonth();
-  orderSchema.date.day = date.getMonth();
+  orderSchema.date.month = date.getMonth() + 1;
+  orderSchema.date.day = date.getDay();
   orderSchema.date.hour = date.getHours();
   orderSchema.date.minute = date.getMinutes();
   orderSchema.customer.name = name;
